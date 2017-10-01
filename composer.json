@@ -15,6 +15,7 @@
         "issues": "https://github.com/Koriit/PHPCircle/issues"
     },    
     "require": {
+        "php": "^5.6 || ^7.0",
         "koriit/eventdispatcher": "^1.0",
         "php-di/php-di": "^5.4",
         "symfony/console": "^3.3"
@@ -39,7 +40,10 @@
         "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+          "php": "5.6"
+        }
     },
     "bin": [ "phpcircle" ]
 }
