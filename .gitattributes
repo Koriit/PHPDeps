@@ -7,4 +7,3 @@
 /.scrutinizer.yml   export-ignore
 /phpunit.xml.dist   export-ignore
 /tests              export-ignore
-/buil               export-ignore

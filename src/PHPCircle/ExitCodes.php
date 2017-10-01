@@ -8,7 +8,7 @@ namespace Koriit\PHPCircle;
 
 class ExitCodes
 {
-    const OK                  = 0;
-    const UNEXPECTED_ERROR    = 1;
+    const OK = 0;
+    const UNEXPECTED_ERROR = 1;
     const STATUS_OUT_OF_RANGE = 255;
 }

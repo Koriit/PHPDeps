@@ -59,14 +59,14 @@ class PHPCircleApplication implements ApplicationInterface
         exit($exitCode > ExitCodes::STATUS_OUT_OF_RANGE ? ExitCodes::STATUS_OUT_OF_RANGE : $exitCode);
     }
 
-    public function isRunning()
-    {
-        return $this->running;
-    }
-
     public function getName()
     {
         return "PHPCircle";
+    }
+
+    public function isRunning()
+    {
+        return $this->running;
     }
 
     protected function initialize()

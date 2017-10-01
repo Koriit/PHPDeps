@@ -1,6 +1,7 @@
-# Project files
+# PHPCircle files
 /vendor/
 /phpunit.xml
+/composer.lock
 
 # Eclipse files
 /.buildpath

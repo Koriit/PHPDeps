@@ -1,4 +1,5 @@
 <?php
+
 namespace Koriit\PHPCircle\Application;
 
 /**

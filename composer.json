@@ -1,49 +1,52 @@
 {
-    "name": "koriit/phpcircle",
-    "description": "Library for finding circular dependencies between modules",
-    "keywords": [ "php", "dependencies", "circular-dependencies" ],
-    "homepage": "https://github.com/Koriit/PHPCircle",
-    "type": "project",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Aleksander Stelmaczonek",
-            "email": "al.stelmaczonek@gmail.com"
-        }
-    ],
-    "support": {
-        "issues": "https://github.com/Koriit/PHPCircle/issues"
-    },    
-    "require": {
-        "php": "^5.6 || ^7.0",
-        "koriit/eventdispatcher": "^1.0",
-        "php-di/php-di": "^5.4",
-        "symfony/console": "^3.3"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~4.8",
-        "squizlabs/php_codesniffer": "^2.3"
-    },
-    "autoload": {
-        "psr-4": {
-            "Koriit\\PHPCircle\\": "src/PHPCircle/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Koriit\\PHPCircle\\Test\\": "tests/"
-        }
-    },
-    "scripts": {
-        "test": "phpunit",
-        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
-        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
-    },
-    "config": {
-        "sort-packages": true,
-        "platform": {
-          "php": "5.6"
-        }
-    },
-    "bin": [ "phpcircle" ]
+  "name": "koriit/phpcircle",
+  "type": "library",
+  "description": "Library for finding circular dependencies between modules",
+  "keywords": [
+    "php",
+    "dependencies",
+    "circular-dependencies"
+  ],
+  "homepage": "https://github.com/Koriit/PHPCircle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Aleksander Stelmaczonek",
+      "email": "al.stelmaczonek@gmail.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/Koriit/PHPCircle/issues"
+  },
+  "require": {
+    "php": "^5.6 || ^7.0 <7.3",
+    "koriit/eventdispatcher": "^1.0",
+    "php-di/php-di": "^5.4",
+    "symfony/console": "^3.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.8",
+    "squizlabs/php_codesniffer": "^2.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Koriit\\PHPCircle\\": "src/PHPCircle/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Koriit\\PHPCircle\\Test\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+    "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "bin": [
+    "phpcircle"
+  ]
 }

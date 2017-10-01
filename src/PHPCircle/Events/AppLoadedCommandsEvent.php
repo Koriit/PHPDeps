@@ -12,3 +12,4 @@ namespace Koriit\PHPCircle\Events;
 class AppLoadedCommandsEvent
 {
 }
+

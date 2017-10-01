@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PHPCircleDependencies
 {
-    function __invoke()
+    public function __invoke()
     {
         return [
               EventDispatcherInterface::class => \DI\object(EventDispatcher::class)->scope(Scope::PROTOTYPE),
