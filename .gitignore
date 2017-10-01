@@ -1,0 +1,14 @@
+# Project files
+/vendor/
+/phpunit.xml
+
+# Eclipse files
+/.buildpath
+/.project
+/.settings/
+
+# NetBeans files
+/nbproject/
+
+# IDEA files
+/.idea/
