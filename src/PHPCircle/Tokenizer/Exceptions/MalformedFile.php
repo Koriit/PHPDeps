@@ -5,7 +5,7 @@ namespace Koriit\PHPCircle\Tokenizer\Exceptions;
 use Exception;
 use Throwable;
 
-class UnexpectedFileEnd extends Exception
+class MalformedFile extends Exception
 {
     /**
      * @var string
@@ -14,7 +14,7 @@ class UnexpectedFileEnd extends Exception
 
     public function __construct($filePath, Throwable $cause = null)
     {
-        parent::__construct("Unexpected end of file: " . $filePath, 0, $cause);
+        parent::__construct("Malformed file: " . $filePath, 0, $cause);
 
         $this->filePath = $filePath;
     }

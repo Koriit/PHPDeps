@@ -10,6 +10,7 @@ namespace Koriit\PHPCircle\Tokenizer;
 use ArrayIterator;
 use Koriit\PHPCircle\Tokenizer\Exceptions\UnexpectedTokensEnd;
 use Koriit\PHPCircle\Tokenizer\Exceptions\WrongPosition;
+use const T_WHITESPACE;
 
 class TokensIterator extends ArrayIterator
 {
@@ -65,6 +66,16 @@ class TokensIterator extends ArrayIterator
         }
     }
 
+    public function skipWhitespaces() {
+        $this->skipTokensIfPresent([T_WHITESPACE]);
+    }
+
+    public function skipTokensIfPresent(array $tokenTypes) {
+        while($this->valid() && $this->currentIsOneOf($tokenTypes)) {
+            $this->next();
+        }
+    }
+
     /**
      * @param int $tokenType
      *
@@ -111,6 +122,7 @@ class TokensIterator extends ArrayIterator
      * @return TokensIterator
      */
     public static function fromContents($contents) {
+//        print_r(token_get_all($contents));
         return new static(token_get_all($contents));
     }
 

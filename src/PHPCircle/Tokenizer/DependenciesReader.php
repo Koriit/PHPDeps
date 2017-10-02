@@ -7,7 +7,8 @@
 namespace Koriit\PHPCircle\Tokenizer;
 
 
-use Koriit\PHPCircle\Tokenizer\Exceptions\UnexpectedFileEnd;
+use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
+use Koriit\PHPCircle\Tokenizer\Exceptions\UnexpectedToken;
 use Koriit\PHPCircle\Tokenizer\Exceptions\UnexpectedTokensEnd;
 use Koriit\PHPCircle\Tokenizer\Exceptions\WrongPosition;
 use const T_CLASS;
@@ -24,7 +25,7 @@ class DependenciesReader
      * @param string $filePath Path to file to parse
      *
      * @return string[] Real dependencies read from use statements
-     * @throws UnexpectedFileEnd
+     * @throws MalformedFile
      */
     public function findDependencies($filePath)
     {
@@ -44,7 +45,10 @@ class DependenciesReader
             }
 
         } catch (UnexpectedTokensEnd $e) {
-            throw new UnexpectedFileEnd($filePath, $e);
+            throw new MalformedFile($filePath, $e);
+
+        } catch (UnexpectedToken $e) {
+            throw new MalformedFile($filePath, $e);
         }
 
         return $useDependencies;
@@ -55,6 +59,7 @@ class DependenciesReader
      *
      * @return string Real dependency from use statement
      * @throws UnexpectedTokensEnd
+     * @throws UnexpectedToken
      */
     private function readUseStatement(TokensIterator $it)
     {
@@ -62,15 +67,19 @@ class DependenciesReader
             throw new WrongPosition("Not at use statement position.");
         }
 
-        $it->next();
+        $it->skipTokensIfPresent([T_USE, T_WHITESPACE, T_CONST, T_FUNCTION]);
+
         $dependency = "";
         while ($it->valid()) {
             $token = $it->current();
             if ($token == ';' || $it->currentIs(T_AS)) {
                 return $dependency;
-
-            } else if (!$it->currentIsOneOf([T_WHITESPACE, T_CONST, T_FUNCTION])) {
-                $dependency .= is_array($token) ? $token[1] : $token;
+            } else if ($it->currentIs(T_WHITESPACE)) {
+                // skip
+            } else if ($it->currentIsOneOf([T_STRING, T_NS_SEPARATOR])) {
+                $dependency .= $token[1];
+            } else {
+                throw new UnexpectedToken($token);
             }
 
             $it->next();

@@ -8,7 +8,7 @@ namespace Koriit\PHPCircle\Test\UnitTests;
 
 
 use Koriit\PHPCircle\Tokenizer\DependenciesReader;
-use Koriit\PHPCircle\Tokenizer\Exceptions\UnexpectedFileEnd;
+use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use PHPUnit_Framework_TestCase;
 
 class DependenciesReaderTest extends PHPUnit_Framework_TestCase
@@ -25,13 +25,35 @@ class DependenciesReaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @throws MalformedFile
+     */
+    public function shouldThrowWhenMalformedSyntax()
+    {
+        $this->setExpectedException(MalformedFile::class);
+
+        $this->reader->findDependencies(__DIR__ . '/../Cases/UseStatements/MalformedSyntaxCase.php.txt');
+    }
+
+    /**
+     * @test
+     * @throws MalformedFile
+     */
+    public function shouldThrowWhenFileInterrupted()
+    {
+        $this->setExpectedException(MalformedFile::class);
+
+        $this->reader->findDependencies(__DIR__ . '/../Cases/UseStatements/InterruptedFileCase.php.txt');
+    }
+
+    /**
+     * @test
      *
      * @dataProvider casesProvider
      *
      * @param array  $expectedList
      * @param string $classFile
      *
-     * @throws UnexpectedFileEnd
+     * @throws MalformedFile
      */
     public function shouldHandleAllCases($expectedList, $classFile)
     {
