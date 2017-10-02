@@ -122,7 +122,6 @@ class TokensIterator extends ArrayIterator
      * @return TokensIterator
      */
     public static function fromContents($contents) {
-//        print_r(token_get_all($contents));
         return new static(token_get_all($contents));
     }
 
