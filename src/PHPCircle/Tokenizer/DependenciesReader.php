@@ -74,11 +74,11 @@ class DependenciesReader
             $token = $it->current();
             if ($token == ';' || $it->currentIs(T_AS)) {
                 return $dependency;
-            } else if ($it->currentIs(T_WHITESPACE)) {
-                // skip
+
             } else if ($it->currentIsOneOf([T_STRING, T_NS_SEPARATOR])) {
                 $dependency .= $token[1];
-            } else {
+
+            } else if(!$it->currentIs(T_WHITESPACE)) {
                 throw new UnexpectedToken($token);
             }
 

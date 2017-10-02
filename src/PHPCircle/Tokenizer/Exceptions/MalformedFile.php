@@ -3,7 +3,6 @@
 namespace Koriit\PHPCircle\Tokenizer\Exceptions;
 
 use Exception;
-use Throwable;
 
 class MalformedFile extends Exception
 {
@@ -12,7 +11,7 @@ class MalformedFile extends Exception
      */
     private $filePath;
 
-    public function __construct($filePath, Throwable $cause = null)
+    public function __construct($filePath, $cause = null)
     {
         parent::__construct("Malformed file: " . $filePath, 0, $cause);
 
