@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PHPCircle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../src/PHPCircle/phpcircle.xsd">
+    <Modules>
+        <DirModule>
+            <Name>DirModule1</Name>
+            <Namespace>Vendor\Library\DirModule1</Namespace>
+            <Path>src/Library/DirModule1</Path>
+        </DirModule>
+        <DirModule>
+            <Name>DirModule2</Name>
+            <Namespace>Vendor\Library\DirModule2</Namespace>
+            <Path>src/Library/DirModule2</Path>
+        </DirModule>
+
+        <ClassModule>
+            <Name>ClassModule1</Name>
+            <Class>Vendor\Library\ClassModule1</Class>
+        </ClassModule>
+        <ClassModule>
+            <Name>ClassModule2</Name>
+            <Class>Vendor\Library\ClassModule2</Class>
+        </ClassModule>
+
+        <FileModule>
+            <Name>FileModule1</Name>
+            <Namespace>Vendor\Library\FileModule1</Namespace>
+            <Path>src/Library/FileModule1.php</Path>
+        </FileModule>
+        <FileModule>
+            <Name>FileModule2</Name>
+            <Namespace>Vendor\Library\FileModule2</Namespace>
+            <Path>src/Library/FileModule2.php</Path>
+        </FileModule>
+    </Modules>
+    <ModuleDetectors>
+        <DirDetector>
+            <Namespace>Vendor\Library1</Namespace>
+            <Path>src/Library1</Path>
+        </DirDetector>
+        <DirDetector>
+            <Namespace>Vendor\Library2</Namespace>
+            <Path>src/Library2</Path>
+        </DirDetector>
+    </ModuleDetectors>
+</PHPCircle>
