@@ -7,8 +7,8 @@
 namespace Koriit\PHPCircle\Tokenizer\Exceptions;
 
 
-use RuntimeException;
+use LogicException;
 
-class WrongPosition extends RuntimeException
+class WrongPosition extends LogicException
 {
 }
