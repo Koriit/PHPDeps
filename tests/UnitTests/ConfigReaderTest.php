@@ -14,6 +14,7 @@ use Koriit\PHPCircle\Config\DirDetector;
 use Koriit\PHPCircle\Config\DirModule;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\Config\FileModule;
+use Koriit\PHPCircle\Module;
 use PHPUnit_Framework_TestCase;
 
 class ConfigReaderTest extends PHPUnit_Framework_TestCase
@@ -54,23 +55,16 @@ class ConfigReaderTest extends PHPUnit_Framework_TestCase
      */
     public function shouldProperlyReadComplexConfig()
     {
-        $dirModules = [
-              new DirModule('DirModule1', 'Vendor\Library\DirModule1', 'src/Library/DirModule1'),
-              new DirModule('DirModule2', 'Vendor\Library\DirModule2', 'src/Library/DirModule2'),
+        $modules = [
+              new Module('Module1', 'Vendor\Library\Module1', 'src/Library/Module1'),
+              new Module('Module2', 'Vendor\Library\Module2', 'src/Library/Module2'),
         ];
-        $classModules = [
-              new ClassModule('ClassModule1', 'Vendor\Library\ClassModule1'),
-              new ClassModule('ClassModule2', 'Vendor\Library\ClassModule2'),
-        ];
-        $fileModules = [
-              new FileModule('FileModule1', 'Vendor\Library\FileModule1', 'src/Library/FileModule1.php'),
-              new FileModule('FileModule2', 'Vendor\Library\FileModule2', 'src/Library/FileModule2.php'),
-        ];
+
         $dirDetectors = [
               new DirDetector('Vendor\Library1', 'src/Library1'),
               new DirDetector('Vendor\Library2', 'src/Library2'),
         ];
-        $expectedConfig = new Config($dirModules, $classModules, $fileModules, $dirDetectors);
+        $expectedConfig = new Config($modules, $dirDetectors);
 
         $config = $this->reader->readConfig(__DIR__ . '/../Cases/Configs/Complex.xml');
 

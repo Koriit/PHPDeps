@@ -11,6 +11,7 @@ use DOMDocument;
 use DOMElement;
 use function each;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
+use Koriit\PHPCircle\Module;
 use function libxml_use_internal_errors;
 
 class ConfigReader
@@ -27,12 +28,10 @@ class ConfigReader
 
         $this->validateSchema($document);
 
-        $dirModules = $this->readDirModules($document);
-        $classModules = $this->readClassModules($document);
-        $fileModules = $this->readFileModules($document);
+        $modules = $this->readModules($document);
         $dirDetectors = $this->readDirDetectors($document);
 
-        return new Config($dirModules, $classModules, $fileModules, $dirDetectors);
+        return new Config($modules, $dirDetectors);
     }
 
     /**
@@ -52,60 +51,21 @@ class ConfigReader
     /**
      * @param DOMDocument $document
      *
-     * @return DirModule[]
+     * @return Module[]
      */
-    private function readDirModules($document)
+    private function readModules($document)
     {
-        $dirModules = [];
-        /** @var DOMElement $dirModule */
-        foreach ($document->getElementsByTagName("DirModule") as $dirModule) {
-            $dirModules[] = new DirModule(
-                  $dirModule->getElementsByTagName("Name")->item(0)->nodeValue,
-                  $dirModule->getElementsByTagName("Namespace")->item(0)->nodeValue,
-                  $dirModule->getElementsByTagName("Path")->item(0)->nodeValue
+        $modules = [];
+        /** @var DOMElement $module */
+        foreach ($document->getElementsByTagName("Module") as $module) {
+            $modules[] = new Module(
+                  $module->getElementsByTagName("Name")->item(0)->nodeValue,
+                  $module->getElementsByTagName("Namespace")->item(0)->nodeValue,
+                  $module->getElementsByTagName("Path")->item(0)->nodeValue
             );
         }
 
-        return $dirModules;
-    }
-
-    /**
-     * @param DOMDocument $document
-     *
-     * @return ClassModule[]
-     */
-    private function readClassModules($document)
-    {
-        $classModules = [];
-        /** @var DOMElement $classModule */
-        foreach ($document->getElementsByTagName("ClassModule") as $classModule) {
-            $classModules[] = new ClassModule(
-                  $classModule->getElementsByTagName("Name")->item(0)->nodeValue,
-                  $classModule->getElementsByTagName("Class")->item(0)->nodeValue
-            );
-        }
-
-        return $classModules;
-    }
-
-    /**
-     * @param DOMDocument $document
-     *
-     * @return FileModule[]
-     */
-    private function readFileModules($document)
-    {
-        $fileModules = [];
-        /** @var DOMElement $fileModule */
-        foreach ($document->getElementsByTagName("FileModule") as $fileModule) {
-            $fileModules[] = new FileModule(
-                  $fileModule->getElementsByTagName("Name")->item(0)->nodeValue,
-                  $fileModule->getElementsByTagName("Namespace")->item(0)->nodeValue,
-                  $fileModule->getElementsByTagName("Path")->item(0)->nodeValue
-            );
-        }
-
-        return $fileModules;
+        return $modules;
     }
 
     /**

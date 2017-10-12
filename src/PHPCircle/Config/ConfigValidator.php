@@ -32,7 +32,7 @@ class ConfigValidator
      */
     private function checkIfEmpty(Config $config)
     {
-        if (empty($config->getDirModules()) && empty($config->getClassModules()) && empty($config->getFileModules()) && empty($config->getDirDetectors())) {
+        if (empty($config->getModules()) && empty($config->getDirDetectors())) {
             throw new InvalidConfig("Configuration cannot be empty");
         }
     }
@@ -45,13 +45,7 @@ class ConfigValidator
     private function checkNameDuplication(Config $config)
     {
         $modules = [];
-        foreach ($config->getDirModules() as $module) {
-            $modules[] = $module->getName();
-        }
-        foreach ($config->getClassModules() as $module) {
-            $modules[] = $module->getName();
-        }
-        foreach ($config->getFileModules() as $module) {
+        foreach ($config->getModules() as $module) {
             $modules[] = $module->getName();
         }
 

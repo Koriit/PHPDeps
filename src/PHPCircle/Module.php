@@ -4,10 +4,10 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle\Config;
+namespace Koriit\PHPCircle;
 
 
-class FileModule
+class Module
 {
     /** @var string */
     private $name;

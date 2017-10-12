@@ -7,47 +7,29 @@
 namespace Koriit\PHPCircle\Config;
 
 
+use Koriit\PHPCircle\Module;
+
 class Config
 {
-    /** @var DirModule[] */
-    private $dirModules;
-
-    /** @var ClassModule[] */
-    private $classModules;
-
-    /** @var FileModule[] */
-    private $fileModules;
+    /** @var Module[] */
+    private $modules;
 
     /** @var DirDetector[] */
     private $dirDetectors;
 
     /**
-     * @param DirModule[]   $dirModules
-     * @param ClassModule[] $classModules
-     * @param FileModule[]  $fileModules
+     * @param Module[]      $modules
      * @param DirDetector[] $dirDetectors
      */
-    public function __construct(array $dirModules, array $classModules, array $fileModules, array $dirDetectors)
+    public function __construct(array $modules, array $dirDetectors)
     {
-        $this->dirModules = $dirModules;
-        $this->classModules = $classModules;
-        $this->fileModules = $fileModules;
+        $this->modules = $modules;
         $this->dirDetectors = $dirDetectors;
     }
 
-    public function getDirModules()
+    public function getModules()
     {
-        return $this->dirModules;
-    }
-
-    public function getClassModules()
-    {
-        return $this->classModules;
-    }
-
-    public function getFileModules()
-    {
-        return $this->fileModules;
+        return $this->modules;
     }
 
     public function getDirDetectors()

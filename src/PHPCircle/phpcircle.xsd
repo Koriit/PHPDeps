@@ -2,22 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="PHPCircle" type="PHPCircleType"/>
 
-    <xs:complexType name="DirModuleType">
-        <xs:sequence>
-            <xs:element type="xs:string" name="Name"/>
-            <xs:element type="xs:string" name="Namespace"/>
-            <xs:element type="xs:string" name="Path"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="ClassModuleType">
-        <xs:sequence>
-            <xs:element type="xs:string" name="Name"/>
-            <xs:element type="xs:string" name="Class"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="FileModuleType">
+    <xs:complexType name="ModuleType">
         <xs:sequence>
             <xs:element type="xs:string" name="Name"/>
             <xs:element type="xs:string" name="Namespace"/>
@@ -27,9 +12,7 @@
 
     <xs:complexType name="ModulesType">
         <xs:sequence>
-            <xs:element type="DirModuleType" name="DirModule" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element type="ClassModuleType" name="ClassModule" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element type="FileModuleType" name="FileModule" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="ModuleType" name="Module" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 

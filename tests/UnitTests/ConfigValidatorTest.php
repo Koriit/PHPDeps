@@ -35,7 +35,7 @@ class ConfigValidatorTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(InvalidConfig::class);
 
-        $this->validator->check(new Config([], [], [], []));
+        $this->validator->check(new Config([], []));
     }
 
     /**

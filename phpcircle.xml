@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PHPCircle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="src/PHPCircle/phpcircle.xsd">
     <Modules>
-        <DirModule>
+        <Module>
             <Name>Tokenizer</Name>
             <Namespace>Koriit\PHPCircle\Tokenizer</Namespace>
             <Path>src/PHPCircle/Tokenizer</Path>
-        </DirModule>
+        </Module>
 
-        <ClassModule>
+        <Module>
             <Name>PHPCircleApplication</Name>
             <Class>Koriit\PHPCircle\PHPCircleApplication</Class>
-        </ClassModule>
+        </Module>
 
-        <FileModule>
+        <Module>
             <Name>PHPCircleDependencies</Name>
             <Namespace>Koriit\PHPCircle\PHPCircleDependencies</Namespace>
             <Path>src/PHPCircle/PHPCircleDependencies.php</Path>
-        </FileModule>
+        </Module>
     </Modules>
     <!--<ModuleDetectors>-->
         <!--<DirDetector>-->
