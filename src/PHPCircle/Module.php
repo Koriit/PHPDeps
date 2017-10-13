@@ -7,6 +7,9 @@
 namespace Koriit\PHPCircle;
 
 
+use function is_dir;
+use function str_replace;
+
 class Module
 {
     /** @var string */
@@ -18,11 +21,15 @@ class Module
     /** @var string */
     private $path;
 
+    /** @var string */
+    private $pattern;
+
     public function __construct($name, $namespace, $path)
     {
         $this->name = $name;
         $this->namespace = $namespace;
         $this->path = $path;
+        $this->pattern = '^' . str_replace('\\', '\\\\', $namespace) . (is_dir($path) ? '(\\\\.+)?' : '') . '$';
     }
 
     public function getName()
@@ -38,5 +45,10 @@ class Module
     public function getPath()
     {
         return $this->path;
+    }
+
+    public function getPattern()
+    {
+        return $this->pattern;
     }
 }
