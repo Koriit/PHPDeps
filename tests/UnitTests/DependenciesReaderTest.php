@@ -31,7 +31,7 @@ class DependenciesReaderTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(MalformedFile::class);
 
-        $this->reader->findDependencies(__DIR__ . '/../Cases/UseStatements/MalformedSyntaxCase.php.txt');
+        $this->reader->findFileDependencies(__DIR__ . '/../Cases/UseStatements/MalformedSyntaxCase.php.txt');
     }
 
     /**
@@ -42,13 +42,13 @@ class DependenciesReaderTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(MalformedFile::class);
 
-        $this->reader->findDependencies(__DIR__ . '/../Cases/UseStatements/InterruptedFileCase.php.txt');
+        $this->reader->findFileDependencies(__DIR__ . '/../Cases/UseStatements/InterruptedFileCase.php.txt');
     }
 
     /**
      * @test
      *
-     * @dataProvider casesProvider
+     * @dataProvider getFileCases
      *
      * @param array  $expectedList
      * @param string $classFile
@@ -57,13 +57,13 @@ class DependenciesReaderTest extends PHPUnit_Framework_TestCase
      */
     public function shouldHandleAllCases($expectedList, $classFile)
     {
-        $resultList = $this->reader->findDependencies($classFile);
+        $resultList = $this->reader->findFileDependencies($classFile);
 
         $this->assertEquals($expectedList, $resultList);
     }
 
 
-    public function casesProvider()
+    public function getFileCases()
     {
         return [
               'Simple Case' => [

@@ -27,7 +27,7 @@ class DependenciesReader
      * @return string[] Real dependencies read from use statements
      * @throws MalformedFile
      */
-    public function findDependencies($filePath)
+    public function findFileDependencies($filePath)
     {
         $tokens = TokensIterator::fromFile($filePath);
 

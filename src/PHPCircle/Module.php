@@ -29,7 +29,7 @@ class Module
         $this->name = $name;
         $this->namespace = $namespace;
         $this->path = $path;
-        $this->pattern = '^' . str_replace('\\', '\\\\', $namespace) . (is_dir($path) ? '(\\\\.+)?' : '') . '$';
+        $this->pattern = '/^' . str_replace('\\', '\\\\', $namespace) . (is_dir($path) ? '(\\\\.+)?' : '') . '$/';
     }
 
     public function getName()

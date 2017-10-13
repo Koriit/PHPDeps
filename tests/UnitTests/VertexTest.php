@@ -4,7 +4,7 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle\Test\UnitTests\VertextTest;
+namespace Koriit\PHPCircle\Test\UnitTests;
 
 use Koriit\PHPCircle\Graph\Vertex;
 

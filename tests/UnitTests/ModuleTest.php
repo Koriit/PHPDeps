@@ -26,7 +26,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $pattern = $module->getPattern();
 
-        $this->assertEquals('^Some\\\\Namespace\\\\Module\\\\Class$', $pattern);
+        $this->assertEquals('/^Some\\\\Namespace\\\\Module\\\\Class$/', $pattern);
     }
 
     /**
@@ -38,6 +38,6 @@ class ModuleTest extends PHPUnit_Framework_TestCase
 
         $pattern = $module->getPattern();
 
-        $this->assertEquals('^Some\\\\Namespace\\\\Module(\\\\.+)?$', $pattern);
+        $this->assertEquals('/^Some\\\\Namespace\\\\Module(\\\\.+)?$/', $pattern);
     }
 }
