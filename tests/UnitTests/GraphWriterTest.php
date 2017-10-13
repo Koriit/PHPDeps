@@ -6,22 +6,22 @@
 
 namespace Koriit\PHPCircle\Test\UnitTests;
 
-use Koriit\PHPCircle\Console\ConsoleWriter;
+use Koriit\PHPCircle\Console\GraphWriter;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 use const PHP_EOL;
 
-class ConsoleWriterTest extends \PHPUnit_Framework_TestCase
+class GraphWriterTest extends \PHPUnit_Framework_TestCase
 {
     /** @var BufferedOutput */
     private $output;
 
-    /** @var ConsoleWriter */
+    /** @var GraphWriter */
     private $writer;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->output = new BufferedOutput();
-        $this->writer = new ConsoleWriter($this->output);
+        $this->writer = new GraphWriter($this->output);
     }
 
     /**
@@ -42,7 +42,7 @@ class ConsoleWriterTest extends \PHPUnit_Framework_TestCase
     public function outputCases()
     {
         return [
-              "TwoNodes"   => [
+              "TwoNodes" => [
                     ["A", "B"],
                     "* A" . PHP_EOL .
                     "↕" . PHP_EOL .
@@ -58,7 +58,7 @@ class ConsoleWriterTest extends \PHPUnit_Framework_TestCase
                     "* C" . PHP_EOL,
               ],
 
-              "FourNodes"  => [
+              "FourNodes" => [
                     ["A", "B", "C", "D"],
                     "* A" . PHP_EOL .
                     "↑↘" . PHP_EOL .

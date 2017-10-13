@@ -7,12 +7,12 @@
 namespace Koriit\PHPCircle\Console;
 
 
-use function array_pop;
-use function array_shift;
 use RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
+use function array_pop;
+use function array_shift;
 
-class ConsoleWriter
+class GraphWriter
 {
     /** @var OutputInterface */
     private $output;
