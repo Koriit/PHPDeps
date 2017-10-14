@@ -26,9 +26,7 @@ use RuntimeException;
 
 class ModulesReader
 {
-    /**
-     * @var DependenciesReader
-     */
+    /** @var DependenciesReader */
     private $fileReader;
 
     public function __construct(DependenciesReader $fileReader)
@@ -42,7 +40,8 @@ class ModulesReader
      * @return DirectedGraph Graph describing dependencies between modules
      * @throws MalformedFile
      */
-    public function generateDependenciesGraph(array $modules) {
+    public function generateDependenciesGraph(array $modules)
+    {
         /** @var Vertex[] $vertices */
         $vertices = [];
         foreach ($modules as $module) {
@@ -51,7 +50,7 @@ class ModulesReader
 
         foreach ($vertices as $vertex) {
             $dependencies = $this->findModuleDependencies($vertex->getValue()->getPath());
-            foreach($dependencies as $dependency) {
+            foreach ($dependencies as $dependency) {
                 foreach ($vertices as $neighbour) {
                     if ($vertex !== $neighbour && preg_match($neighbour->getValue()->getPattern(), $dependency)) {
                         $vertex->addNeighbour($neighbour);

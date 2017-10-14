@@ -70,13 +70,19 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
      *
      * @dataProvider getGraphCases
      *
-     * @param Module[] $modules
-     * @param array    $expectations
+     * @param string $case
+     * @param array  $expectations
      *
      * @throws MalformedFile
      */
-    public function shouldGenerateModuleDependenciesGraph(array $modules, array $expectations)
+    public function shouldGenerateModuleDependenciesGraph($case, array $expectations)
     {
+        $modules = [];
+        $modulesCount = count($expectations);
+        for ($i = 1; $i <= $modulesCount; $i++) {
+            $modules[] = new Module('Module' . $i, 'Vendor\Library\Module' . $i, __DIR__ . '/../Cases/Modules/' . $case . '/Module' . $i);
+        }
+
         $graph = $this->reader->generateDependenciesGraph($modules);
 
         foreach ($graph->getVertices() as $vertex) {
@@ -93,10 +99,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
     {
         return [
               "Acyclic Modules" => [
-                    [
-                          new Module('Module1', 'Vendor\Library\Module1', __DIR__ . '/../Cases/Modules/AcyclicModules/Module1'),
-                          new Module('Module2', 'Vendor\Library\Module2', __DIR__ . '/../Cases/Modules/AcyclicModules/Module2'),
-                    ],
+                    'AcyclicModules',
                     [
                           "Module1" => [],
                           "Module2" => [],
@@ -104,10 +107,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
               ],
 
               "Two Cyclic Modules" => [
-                    [
-                          new Module('Module1', 'Vendor\Library\Module1', __DIR__ . '/../Cases/Modules/TwoCyclicModules/Module1'),
-                          new Module('Module2', 'Vendor\Library\Module2', __DIR__ . '/../Cases/Modules/TwoCyclicModules/Module2'),
-                    ],
+                    'TwoCyclicModules',
                     [
                           "Module1" => ["Module2"],
                           "Module2" => ["Module1"],
@@ -115,11 +115,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
               ],
 
               "Three Cyclic Modules" => [
-                    [
-                          new Module('Module1', 'Vendor\Library\Module1', __DIR__ . '/../Cases/Modules/ThreeCyclicModules/Module1'),
-                          new Module('Module2', 'Vendor\Library\Module2', __DIR__ . '/../Cases/Modules/ThreeCyclicModules/Module2'),
-                          new Module('Module3', 'Vendor\Library\Module3', __DIR__ . '/../Cases/Modules/ThreeCyclicModules/Module3'),
-                    ],
+                    'ThreeCyclicModules',
                     [
                           "Module1" => ["Module2"],
                           "Module2" => ["Module3"],
@@ -128,11 +124,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
               ],
 
               "Two Connected Cycles" => [
-                    [
-                          new Module('Module1', 'Vendor\Library\Module1', __DIR__ . '/../Cases/Modules/TwoConnectedCycles/Module1'),
-                          new Module('Module2', 'Vendor\Library\Module2', __DIR__ . '/../Cases/Modules/TwoConnectedCycles/Module2'),
-                          new Module('Module3', 'Vendor\Library\Module3', __DIR__ . '/../Cases/Modules/TwoConnectedCycles/Module3'),
-                    ],
+                    'TwoConnectedCycles',
                     [
                           "Module1" => ["Module2"],
                           "Module2" => ["Module1", "Module3"],
@@ -141,12 +133,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
               ],
 
               "Two Disconnected Cycles" => [
-                    [
-                          new Module('Module1', 'Vendor\Library\Module1', __DIR__ . '/../Cases/Modules/TwoDisconnectedCycles/Module1'),
-                          new Module('Module2', 'Vendor\Library\Module2', __DIR__ . '/../Cases/Modules/TwoDisconnectedCycles/Module2'),
-                          new Module('Module3', 'Vendor\Library\Module3', __DIR__ . '/../Cases/Modules/TwoDisconnectedCycles/Module3'),
-                          new Module('Module4', 'Vendor\Library\Module4', __DIR__ . '/../Cases/Modules/TwoDisconnectedCycles/Module4'),
-                    ],
+                    'TwoDisconnectedCycles',
                     [
                           "Module1" => ["Module2"],
                           "Module2" => ["Module1"],
