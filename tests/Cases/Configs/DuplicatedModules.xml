@@ -4,13 +4,13 @@
         <Module>
             <Name>Tokenizer</Name>
             <Namespace>Koriit\PHPCircle\Tokenizer</Namespace>
-            <Path>src/PHPCircle/Tokenizer</Path>
+            <Path>./src/PHPCircle/Tokenizer</Path>
         </Module>
 
         <Module>
             <Name>Tokenizer</Name>
             <Namespace>Koriit\PHPCircle\Tokenizer</Namespace>
-            <Path>src/PHPCircle/Tokenizer.php</Path>
+            <Path>./src/PHPCircle/Tokenizer.php</Path>
         </Module>
     </Modules>
 </PHPCircle>

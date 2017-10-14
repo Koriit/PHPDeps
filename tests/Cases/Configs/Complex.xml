@@ -4,22 +4,22 @@
         <Module>
             <Name>Module1</Name>
             <Namespace>Vendor\Library\Module1</Namespace>
-            <Path>src/Library/Module1</Path>
+            <Path>./src/Library/Module1</Path>
         </Module>
         <Module>
             <Name>Module2</Name>
             <Namespace>Vendor\Library\Module2</Namespace>
-            <Path>src/Library/Module2</Path>
+            <Path>./src/Library/Module2</Path>
         </Module>
     </Modules>
     <ModuleDetectors>
         <DirDetector>
             <Namespace>Vendor\Library1</Namespace>
-            <Path>src/Library1</Path>
+            <Path>./src/Library1</Path>
         </DirDetector>
         <DirDetector>
             <Namespace>Vendor\Library2</Namespace>
-            <Path>src/Library2</Path>
+            <Path>./src/Library2</Path>
         </DirDetector>
     </ModuleDetectors>
 </PHPCircle>

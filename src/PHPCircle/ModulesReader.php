@@ -18,6 +18,7 @@ use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use const PHP_EOL;
 use function preg_match;
 use function print_r;
+use function realpath;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;

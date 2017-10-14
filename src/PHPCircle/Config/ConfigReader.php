@@ -6,10 +6,9 @@
 
 namespace Koriit\PHPCircle\Config;
 
-
+use function dirname;
 use DOMDocument;
 use DOMElement;
-use function each;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\Module;
 use function libxml_use_internal_errors;
@@ -22,14 +21,17 @@ class ConfigReader
      * @return Config
      * @throws InvalidSchema
      */
-    public function readConfig($filePath) {
+    public function readConfig($filePath)
+    {
         $document = new DOMDocument();
         $document->load($filePath);
 
         $this->validateSchema($document);
 
-        $modules = $this->readModules($document);
-        $dirDetectors = $this->readDirDetectors($document);
+        $dir = realpath(dirname($filePath));
+
+        $modules = $this->readModules($document, $dir);
+        $dirDetectors = $this->readDirDetectors($document, $dir);
 
         return new Config($modules, $dirDetectors);
     }
@@ -50,19 +52,20 @@ class ConfigReader
 
     /**
      * @param DOMDocument $document
+     * @param string      $dir Absolute path to relative directory
      *
      * @return Module[]
      */
-    private function readModules($document)
+    private function readModules($document, $dir)
     {
         $modules = [];
         /** @var DOMElement $module */
         foreach ($document->getElementsByTagName("Module") as $module) {
-            $modules[] = new Module(
-                  $module->getElementsByTagName("Name")->item(0)->nodeValue,
-                  $module->getElementsByTagName("Namespace")->item(0)->nodeValue,
-                  $module->getElementsByTagName("Path")->item(0)->nodeValue
-            );
+            $name = $module->getElementsByTagName("Name")->item(0)->nodeValue;
+            $namespace = $module->getElementsByTagName("Namespace")->item(0)->nodeValue;
+            $path = $this->toAbsolutePath($module->getElementsByTagName("Path")->item(0)->nodeValue, $dir);
+
+            $modules[] = new Module($name, $namespace, $path);
         }
 
         return $modules;
@@ -70,20 +73,56 @@ class ConfigReader
 
     /**
      * @param DOMDocument $document
+     * @param string      $dir Absolute path to relative directory
      *
      * @return DirDetector[]
      */
-    private function readDirDetectors($document)
+    private function readDirDetectors($document, $dir)
     {
         $dirDetectors = [];
         /** @var DOMElement $dirDetector */
         foreach ($document->getElementsByTagName("DirDetector") as $dirDetector) {
-            $dirDetectors[] = new DirDetector(
-                  $dirDetector->getElementsByTagName("Namespace")->item(0)->nodeValue,
-                  $dirDetector->getElementsByTagName("Path")->item(0)->nodeValue
-            );
+            $namespace = $dirDetector->getElementsByTagName("Namespace")->item(0)->nodeValue;
+            $path = $this->toAbsolutePath($dirDetector->getElementsByTagName("Path")->item(0)->nodeValue, $dir);
+
+            $dirDetectors[] = new DirDetector($namespace, $path);
         }
 
         return $dirDetectors;
+    }
+
+    /**
+     * @param string $path
+     * @param string $dir Absolute path to relative directory
+     *
+     * @return string
+     * @see https://github.com/sebastianbergmann/phpunit/blob/976b986778e2962577440b93d481e67576124e0d/src/Util/Configuration.php#L1156
+     *
+     */
+    private function toAbsolutePath($path, $dir)
+    {
+        $path = trim($path);
+        if ($path[0] === '/') {
+            return $path;
+        }
+
+        // Matches the following on Windows:
+        //  - \\NetworkComputer\Path
+        //  - \\.\D:
+        //  - \\.\c:
+        //  - C:\Windows
+        //  - C:\windows
+        //  - C:/windows
+        //  - c:/windows
+        if (defined('PHP_WINDOWS_VERSION_BUILD') &&
+              ($path[0] === '\\' || (strlen($path) >= 3 && preg_match('#^[A-Z]\:[/\\\]#i', substr($path, 0, 3))))) {
+            return $path;
+        }
+        // Stream
+        if (strpos($path, '://') !== false) {
+            return $path;
+        }
+
+        return $dir . DIRECTORY_SEPARATOR . $path;
     }
 }

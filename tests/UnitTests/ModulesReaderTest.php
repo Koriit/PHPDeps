@@ -14,9 +14,7 @@ use PHPUnit_Framework_TestCase;
 
 class ModulesReaderTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var ModulesReader
-     */
+    /** @var ModulesReader */
     private $reader;
 
     public function setUp()

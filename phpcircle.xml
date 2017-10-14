@@ -4,18 +4,13 @@
         <Module>
             <Name>Tokenizer</Name>
             <Namespace>Koriit\PHPCircle\Tokenizer</Namespace>
-            <Path>src/PHPCircle/Tokenizer</Path>
-        </Module>
-
-        <Module>
-            <Name>PHPCircleApplication</Name>
-            <Class>Koriit\PHPCircle\PHPCircleApplication</Class>
+            <Path>./src/PHPCircle/Tokenizer</Path>
         </Module>
 
         <Module>
             <Name>PHPCircleDependencies</Name>
             <Namespace>Koriit\PHPCircle\PHPCircleDependencies</Namespace>
-            <Path>src/PHPCircle/PHPCircleDependencies.php</Path>
+            <Path>./src/PHPCircle/PHPCircleDependencies.php</Path>
         </Module>
     </Modules>
     <!--<ModuleDetectors>-->

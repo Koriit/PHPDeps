@@ -6,6 +6,7 @@
 
 namespace Koriit\PHPCircle\Test\UnitTests;
 
+use const DIRECTORY_SEPARATOR;
 use Koriit\PHPCircle\Config\Config;
 use Koriit\PHPCircle\Config\ConfigReader;
 use Koriit\PHPCircle\Config\DirDetector;
@@ -52,13 +53,13 @@ class ConfigReaderTest extends PHPUnit_Framework_TestCase
     public function shouldProperlyReadComplexConfig()
     {
         $modules = [
-              new Module('Module1', 'Vendor\Library\Module1', 'src/Library/Module1'),
-              new Module('Module2', 'Vendor\Library\Module2', 'src/Library/Module2'),
+              new Module('Module1', 'Vendor\Library\Module1', realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library/Module1'),
+              new Module('Module2', 'Vendor\Library\Module2', realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library/Module2'),
         ];
 
         $dirDetectors = [
-              new DirDetector('Vendor\Library1', 'src/Library1'),
-              new DirDetector('Vendor\Library2', 'src/Library2'),
+              new DirDetector('Vendor\Library1', realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library1'),
+              new DirDetector('Vendor\Library2', realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library2'),
         ];
         $expectedConfig = new Config($modules, $dirDetectors);
 
