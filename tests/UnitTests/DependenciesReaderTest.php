@@ -126,6 +126,13 @@ class DependenciesReaderTest extends PHPUnit_Framework_TestCase
                     __DIR__ . '/../Cases/UseStatements/ConstCase.php',
               ],
 
+              'Interface Case' => [
+                    [
+                          'Vendor\Library\Module\SomeClass',
+                    ],
+                    __DIR__ . '/../Cases/UseStatements/InterfaceCase.php',
+              ],
+
               'Empty Case' => [
                     [],
                     __DIR__ . '/../Cases/UseStatements/EmptyCase.php',

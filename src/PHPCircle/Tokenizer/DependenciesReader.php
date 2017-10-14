@@ -14,6 +14,7 @@ use Koriit\PHPCircle\Tokenizer\Exceptions\WrongPosition;
 use const T_CLASS;
 use const T_CONST;
 use const T_FUNCTION;
+use const T_INTERFACE;
 use const T_TRAIT;
 use const T_USE;
 use const T_WHITESPACE;
@@ -34,7 +35,7 @@ class DependenciesReader
         $useDependencies = [];
         try {
             while ($tokens->valid()) {
-                if ($tokens->currentIsOneOf([T_CLASS, T_TRAIT, T_FUNCTION])) {
+                if ($tokens->currentIsOneOf([T_CLASS, T_TRAIT, T_FUNCTION, T_INTERFACE])) {
                     $tokens->skipNextBlock();
 
                 } else if ($tokens->currentIs(T_USE)) {
