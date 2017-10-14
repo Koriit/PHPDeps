@@ -11,11 +11,14 @@ use function in_array;
 
 class Vertex
 {
-    /** @var mixed */
+    /** @var mixed Held value */
     private $value;
 
     /** @var Vertex[] */
     private $neighbours;
+
+    /** @var int The index in the graph */
+    private $index = null;
 
     public function __construct($value, array $neighbours = [])
     {
@@ -37,14 +40,6 @@ class Vertex
     }
 
     /**
-     * @param Vertex[] $neighbours
-     */
-    public function setNeighbours(array $neighbours)
-    {
-        $this->neighbours = $neighbours;
-    }
-
-    /**
      * @param Vertex $neighbour
      */
     public function addNeighbour(Vertex $neighbour)
@@ -52,5 +47,15 @@ class Vertex
         if (!in_array($neighbour, $this->neighbours)) {
             $this->neighbours[] = $neighbour;
         }
+    }
+
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    public function setIndex($index)
+    {
+        $this->index = $index;
     }
 }
