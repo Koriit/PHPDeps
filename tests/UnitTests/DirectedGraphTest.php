@@ -6,12 +6,13 @@
 
 namespace Koriit\PHPCircle\Test\UnitTests;
 
-use function array_keys;
 use Koriit\PHPCircle\Graph\DirectedGraph;
 use Koriit\PHPCircle\Graph\Vertex;
+use PHPUnit_Framework_TestCase;
 use stdClass;
+use function array_keys;
 
-class DirectedGraphTest extends \PHPUnit_Framework_TestCase
+class DirectedGraphTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @test

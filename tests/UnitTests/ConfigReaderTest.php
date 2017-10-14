@@ -6,14 +6,10 @@
 
 namespace Koriit\PHPCircle\Test\UnitTests;
 
-
-use Koriit\PHPCircle\Config\ClassModule;
 use Koriit\PHPCircle\Config\Config;
 use Koriit\PHPCircle\Config\ConfigReader;
 use Koriit\PHPCircle\Config\DirDetector;
-use Koriit\PHPCircle\Config\DirModule;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
-use Koriit\PHPCircle\Config\FileModule;
 use Koriit\PHPCircle\Module;
 use PHPUnit_Framework_TestCase;
 

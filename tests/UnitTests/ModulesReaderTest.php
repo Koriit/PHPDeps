@@ -6,15 +6,11 @@
 
 namespace Koriit\PHPCircle\Test\UnitTests;
 
-
-use function in_array;
-use Koriit\PHPCircle\Graph\Vertex;
 use Koriit\PHPCircle\Module;
 use Koriit\PHPCircle\ModulesReader;
 use Koriit\PHPCircle\Tokenizer\DependenciesReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use PHPUnit_Framework_TestCase;
-use function print_r;
 
 class ModulesReaderTest extends PHPUnit_Framework_TestCase
 {
@@ -30,6 +26,8 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     *
+     * @throws MalformedFile
      */
     public function shouldReadDirModuleDependencies()
     {
@@ -50,6 +48,8 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     *
+     * @throws MalformedFile
      */
     public function shouldReadFileModuleDependencies()
     {

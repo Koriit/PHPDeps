@@ -6,16 +6,13 @@
 
 namespace Koriit\PHPCircle\Test\UnitTests;
 
-
 use Koriit\PHPCircle\Tokenizer\DependenciesReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use PHPUnit_Framework_TestCase;
 
 class DependenciesReaderTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var DependenciesReader
-     */
+    /** @var DependenciesReader */
     private $reader;
 
     public function setUp()

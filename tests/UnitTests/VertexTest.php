@@ -7,13 +7,15 @@
 namespace Koriit\PHPCircle\Test\UnitTests;
 
 use Koriit\PHPCircle\Graph\Vertex;
+use PHPUnit_Framework_TestCase;
 
-class VertexTest extends \PHPUnit_Framework_TestCase
+class VertexTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
-    public function shouldAddNeighbourOnlyOnce() {
+    public function shouldAddNeighbourOnlyOnce()
+    {
         $vertex = new Vertex("Vertex");
         $neighbour = new Vertex("Neighbour");
 

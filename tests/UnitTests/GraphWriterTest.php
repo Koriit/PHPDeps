@@ -7,10 +7,11 @@
 namespace Koriit\PHPCircle\Test\UnitTests;
 
 use Koriit\PHPCircle\Console\GraphWriter;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
 use const PHP_EOL;
 
-class GraphWriterTest extends \PHPUnit_Framework_TestCase
+class GraphWriterTest extends PHPUnit_Framework_TestCase
 {
     /** @var BufferedOutput */
     private $output;

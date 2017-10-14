@@ -6,7 +6,6 @@
 
 namespace Koriit\PHPCircle\Test\UnitTests;
 
-
 use Koriit\PHPCircle\Config\Config;
 use Koriit\PHPCircle\Config\ConfigReader;
 use Koriit\PHPCircle\Config\ConfigValidator;
@@ -22,7 +21,8 @@ class ConfigValidatorTest extends PHPUnit_Framework_TestCase
     /** @var ConfigValidator */
     private $validator;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->validator = new ConfigValidator();
         $this->configReader = new ConfigReader();
     }

@@ -6,7 +6,6 @@
 
 namespace Koriit\PHPCircle;
 
-
 use DI\Scope;
 use Koriit\EventDispatcher\EventDispatcher;
 use Koriit\EventDispatcher\EventDispatcherInterface;
