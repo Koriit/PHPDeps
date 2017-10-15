@@ -6,7 +6,6 @@
 
 namespace Koriit\PHPCircle\Graph;
 
-
 use const SORT_REGULAR;
 use function array_merge;
 use function array_unique;

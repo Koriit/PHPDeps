@@ -7,6 +7,7 @@
 namespace Koriit\PHPCircle;
 
 
+use Koriit\PHPCircle\Commands\CheckCommand;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 
@@ -25,6 +26,8 @@ class CommandsLoader
         foreach ($this->getCommandsList() as $command) {
             $kernel->add($container->get($command));
         }
+
+        $kernel->setDefaultCommand($container->get($this->getDefaultCommand())->getName());
     }
 
     /**
@@ -33,6 +36,15 @@ class CommandsLoader
     public function getCommandsList()
     {
         return [
+              CheckCommand::class,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    private function getDefaultCommand()
+    {
+        return CheckCommand::class;
     }
 }

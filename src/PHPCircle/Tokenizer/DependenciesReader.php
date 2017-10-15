@@ -6,7 +6,6 @@
 
 namespace Koriit\PHPCircle\Tokenizer;
 
-
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use Koriit\PHPCircle\Tokenizer\Exceptions\UnexpectedToken;
 use Koriit\PHPCircle\Tokenizer\Exceptions\UnexpectedTokensEnd;
@@ -18,7 +17,6 @@ use const T_INTERFACE;
 use const T_TRAIT;
 use const T_USE;
 use const T_WHITESPACE;
-use function is_array;
 
 class DependenciesReader
 {
@@ -79,7 +77,7 @@ class DependenciesReader
             } else if ($it->currentIsOneOf([T_STRING, T_NS_SEPARATOR])) {
                 $dependency .= $token[1];
 
-            } else if(!$it->currentIs(T_WHITESPACE)) {
+            } else if (!$it->currentIs(T_WHITESPACE)) {
                 throw new UnexpectedToken($token);
             }
 

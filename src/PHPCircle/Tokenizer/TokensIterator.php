@@ -15,6 +15,48 @@ use const T_WHITESPACE;
 class TokensIterator extends ArrayIterator
 {
     /**
+     * @param mixed $token
+     * @param int   $tokenType
+     *
+     * @return bool
+     */
+    public static function isToken($token, $tokenType)
+    {
+        return is_array($token) && $token[0] === $tokenType;
+    }
+
+    /**
+     * @param mixed $token
+     * @param int[] $tokenTypes
+     *
+     * @return bool
+     */
+    public static function isOneOfTokens($token, array $tokenTypes)
+    {
+        return is_array($token) && in_array($token[0], $tokenTypes, true);
+    }
+
+    /**
+     * @param string $contents Contents of PHP file to tokenize
+     *
+     * @return TokensIterator
+     */
+    public static function fromContents($contents)
+    {
+        return new static(token_get_all($contents));
+    }
+
+    /**
+     * @param string $filePath Path to PHP file to tokenize
+     *
+     * @return TokensIterator
+     */
+    public static function fromFile($filePath)
+    {
+        return static::fromContents(file_get_contents($filePath));
+    }
+
+    /**
      * @throws UnexpectedTokensEnd
      */
     public function skipNextBlock()
@@ -24,7 +66,6 @@ class TokensIterator extends ArrayIterator
     }
 
     /**
-
      * @throws UnexpectedTokensEnd
      */
     public function findNextBlock()
@@ -66,12 +107,14 @@ class TokensIterator extends ArrayIterator
         }
     }
 
-    public function skipWhitespaces() {
+    public function skipWhitespaces()
+    {
         $this->skipTokensIfPresent([T_WHITESPACE]);
     }
 
-    public function skipTokensIfPresent(array $tokenTypes) {
-        while($this->valid() && $this->currentIsOneOf($tokenTypes)) {
+    public function skipTokensIfPresent(array $tokenTypes)
+    {
+        while ($this->valid() && $this->currentIsOneOf($tokenTypes)) {
             $this->next();
         }
     }
@@ -81,7 +124,8 @@ class TokensIterator extends ArrayIterator
      *
      * @return bool
      */
-    public function currentIs($tokenType) {
+    public function currentIs($tokenType)
+    {
         return static::isToken($this->current(), $tokenType);
     }
 
@@ -90,47 +134,8 @@ class TokensIterator extends ArrayIterator
      *
      * @return bool
      */
-    public function currentIsOneOf(array $tokenTypes) {
+    public function currentIsOneOf(array $tokenTypes)
+    {
         return static::isOneOfTokens($this->current(), $tokenTypes);
-    }
-
-    /**
-     * @param mixed $token
-     * @param int   $tokenType
-     *
-     * @return bool
-     */
-    public static function isToken($token, $tokenType)
-    {
-        return is_array($token) && $token[0] === $tokenType;
-    }
-
-    /**
-     * @param mixed $token
-     * @param int[] $tokenTypes
-     *
-     * @return bool
-     */
-    public static function isOneOfTokens($token, array $tokenTypes)
-    {
-        return is_array($token) && in_array($token[0], $tokenTypes, true);
-    }
-
-    /**
-     * @param string $contents Contents of PHP file to tokenize
-     *
-     * @return TokensIterator
-     */
-    public static function fromContents($contents) {
-        return new static(token_get_all($contents));
-    }
-
-    /**
-     * @param string $filePath Path to PHP file to tokenize
-     *
-     * @return TokensIterator
-     */
-    public static function fromFile($filePath) {
-        return static::fromContents(file_get_contents($filePath));
     }
 }

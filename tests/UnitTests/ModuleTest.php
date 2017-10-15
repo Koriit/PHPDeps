@@ -6,7 +6,7 @@
 
 namespace Koriit\PHPCircle\Test\UnitTests;
 
-use Koriit\PHPCircle\Module;
+use Koriit\PHPCircle\Modules\Module;
 use PHPUnit_Framework_TestCase;
 
 class ModuleTest extends PHPUnit_Framework_TestCase

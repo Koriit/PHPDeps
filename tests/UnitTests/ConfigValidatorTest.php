@@ -15,16 +15,12 @@ use PHPUnit_Framework_TestCase;
 
 class ConfigValidatorTest extends PHPUnit_Framework_TestCase
 {
-    /** @var ConfigReader */
-    private $configReader;
-
     /** @var ConfigValidator */
     private $validator;
 
     public function setUp()
     {
         $this->validator = new ConfigValidator();
-        $this->configReader = new ConfigReader();
     }
 
     /**
@@ -47,8 +43,7 @@ class ConfigValidatorTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(InvalidConfig::class);
 
-        $config = $this->configReader->readConfig(__DIR__ . '/../Cases/Configs/DuplicatedModules.xml');
-
-        $this->validator->check($config);
+        $configReader = new ConfigReader($this->validator);
+        $configReader->readConfig(__DIR__ . '/../Cases/Configs/DuplicatedModules.xml');
     }
 }

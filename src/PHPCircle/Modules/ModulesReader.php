@@ -4,26 +4,20 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle;
+namespace Koriit\PHPCircle\Modules;
 
-
-use function array_merge;
-use function array_unique;
-use function array_values;
-use function is_dir;
 use Koriit\PHPCircle\Graph\DirectedGraph;
 use Koriit\PHPCircle\Graph\Vertex;
 use Koriit\PHPCircle\Tokenizer\DependenciesReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
-use const PHP_EOL;
-use function preg_match;
-use function print_r;
-use function realpath;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use RecursiveRegexIterator;
-use RegexIterator;
 use RuntimeException;
+use function array_merge;
+use function array_unique;
+use function array_values;
+use function is_dir;
+use function preg_match;
 
 class ModulesReader
 {

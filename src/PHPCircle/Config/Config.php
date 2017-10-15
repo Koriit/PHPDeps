@@ -6,8 +6,7 @@
 
 namespace Koriit\PHPCircle\Config;
 
-
-use Koriit\PHPCircle\Module;
+use Koriit\PHPCircle\Modules\Module;
 
 class Config
 {

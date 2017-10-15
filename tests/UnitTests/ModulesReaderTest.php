@@ -6,8 +6,8 @@
 
 namespace Koriit\PHPCircle\Test\UnitTests;
 
-use Koriit\PHPCircle\Module;
-use Koriit\PHPCircle\ModulesReader;
+use Koriit\PHPCircle\Modules\Module;
+use Koriit\PHPCircle\Modules\ModulesReader;
 use Koriit\PHPCircle\Tokenizer\DependenciesReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use PHPUnit_Framework_TestCase;

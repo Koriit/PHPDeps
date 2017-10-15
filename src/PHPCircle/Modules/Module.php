@@ -4,8 +4,7 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle;
-
+namespace Koriit\PHPCircle\Modules;
 
 use function is_dir;
 use function str_replace;

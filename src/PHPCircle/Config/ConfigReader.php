@@ -6,20 +6,30 @@
 
 namespace Koriit\PHPCircle\Config;
 
-use function dirname;
 use DOMDocument;
 use DOMElement;
+use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
-use Koriit\PHPCircle\Module;
+use Koriit\PHPCircle\Modules\Module;
+use function dirname;
 use function libxml_use_internal_errors;
 
 class ConfigReader
 {
+    /** @var ConfigValidator */
+    private $validator;
+
+    public function __construct(ConfigValidator $validator)
+    {
+        $this->validator = $validator;
+    }
+
     /**
      * @param string $filePath Path to XML config file
      *
      * @return Config
      * @throws InvalidSchema
+     * @throws InvalidConfig
      */
     public function readConfig($filePath)
     {
@@ -33,7 +43,11 @@ class ConfigReader
         $modules = $this->readModules($document, $dir);
         $dirDetectors = $this->readDirDetectors($document, $dir);
 
-        return new Config($modules, $dirDetectors);
+        $config = new Config($modules, $dirDetectors);
+
+        $this->validator->check($config);
+
+        return $config;
     }
 
     /**
