@@ -131,6 +131,17 @@ class DirectedGraphTest extends PHPUnit_Framework_TestCase
                           ["Module3", "Module4"],
                     ],
               ],
+
+              "Non-alphabetical Cycle" => [
+                    [
+                          "Module1" => ["Module3"],
+                          "Module2" => ["Module1"],
+                          "Module3" => ["Module2"],
+                    ],
+                    [
+                          ["Module1", "Module3", "Module2"],
+                    ],
+              ],
         ];
     }
 }
