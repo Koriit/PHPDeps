@@ -79,66 +79,66 @@ class DirectedGraphTest extends PHPUnit_Framework_TestCase
     {
         return [
               "No cycles" => [
-                    [
+                    "neighbourhoods" => [
                           "Module1" => ["Module2"],
                           "Module2" => [],
                     ],
-                    [],
+                    "expectedCycles" => [],
               ],
 
               "2-node cycle" => [
-                    [
+                    "neighbourhoods" => [
                           "Module1" => ["Module2"],
                           "Module2" => ["Module1"],
                     ],
-                    [
+                    "expectedCycles" => [
                           ["Module1", "Module2"],
                     ],
               ],
 
               "3-node cycle" => [
-                    [
+                    "neighbourhoods" => [
                           "Module1" => ["Module2"],
                           "Module2" => ["Module3"],
                           "Module3" => ["Module1"],
                     ],
-                    [
+                    "expectedCycles" => [
                           ["Module1", "Module2", "Module3"],
                     ],
               ],
 
               "Two Connected Cycles" => [
-                    [
+                    "neighbourhoods" => [
                           "Module1" => ["Module2"],
-                          "Module2" => ["Module1", "Module3"],
                           "Module3" => ["Module2"],
+                          "Module2" => ["Module1", "Module3"],
                     ],
-                    [
+                    "expectedCycles" => [
                           ["Module1", "Module2"],
                           ["Module2", "Module3"],
                     ],
               ],
 
               "Two Disconnected Cycles" => [
-                    [
+                    "neighbourhoods" => [
                           "Module1" => ["Module2"],
                           "Module2" => ["Module1"],
                           "Module3" => ["Module4"],
                           "Module4" => ["Module3"],
                     ],
-                    [
+                    "expectedCycles" => [
                           ["Module1", "Module2"],
                           ["Module3", "Module4"],
                     ],
               ],
 
               "Non-alphabetical Cycle" => [
-                    [
+                    "neighbourhoods" => [
                           "Module1" => ["Module3"],
                           "Module2" => ["Module1"],
                           "Module3" => ["Module2"],
                     ],
-                    [
+                    "expectedCycles" => [
                           ["Module1", "Module3", "Module2"],
                     ],
               ],

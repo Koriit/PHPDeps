@@ -8,6 +8,7 @@ namespace Koriit\PHPCircle\Graph;
 
 use const SORT_REGULAR;
 use function array_merge;
+use function array_shift;
 use function array_unique;
 use function array_values;
 use function usort;
@@ -98,16 +99,20 @@ class DirectedGraph
     }
 
     /**
-     * @param array         $cycles
+     * @param mixed[][]     $cycles     Array of cycles
      * @param callable|null $comparator Comparator of vertex values
      *
      * @return mixed
      */
     private function sortAndRemoveDuplicateCycles(array $cycles, callable $comparator = null)
     {
+        if ($comparator == null) {
+            $comparator = $this->getDefaultComparator();
+        }
+
         $cyclesCount = count($cycles);
         for ($i = 0; $i < $cyclesCount; $i++) {
-            $this->sort($cycles[$i], $comparator);
+            $this->scrollCycle($cycles[$i], $comparator);
 
             for ($j = 0; $j < $cyclesCount; $j++) {
                 if ($i == $j || !isset($cycles[$j])) {
@@ -121,7 +126,7 @@ class DirectedGraph
         }
 
         // Sort the cycles themselves
-        $this->sort($cycles, $comparator);
+        usort($cycles, $comparator);
 
         // Reindex array
         return array_values($cycles);
@@ -131,12 +136,30 @@ class DirectedGraph
      * @param array    $array
      * @param callable $comparator
      */
-    private function sort(array &$array, callable $comparator = null)
+    private function scrollCycle(array &$array, callable $comparator)
     {
-        if ($comparator != null) {
-            usort($array, $comparator);
-        } else {
-            sort($array);
+        $count = count($array);
+        // Find minimal element
+        $firstPos = 0;
+        for ($i = 1; $i < $count; $i++) {
+            if ($comparator($array[$firstPos], $array[$i]) === 1) {
+                $firstPos = $i;
+            }
         }
+
+        // Push the elements to the end of array until minimal element is at first position
+        for ($i = 0; $i < $firstPos; $i++) {
+            array_push($array, array_shift($array));
+        }
+    }
+
+    /**
+     * @return callable
+     */
+    private function getDefaultComparator()
+    {
+        return function ($a, $b) {
+            return $a > $b ? 1 : ($a < $b ? -1 : 0);
+        };
     }
 }
