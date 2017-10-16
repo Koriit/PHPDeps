@@ -16,23 +16,23 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="DirDetector">
+    <xs:complexType name="ModuleDetectorType">
         <xs:sequence>
             <xs:element type="xs:string" name="Namespace"/>
             <xs:element type="xs:string" name="Path"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ModuleDetectorsType">
+    <xs:complexType name="DetectorsType">
         <xs:sequence>
-            <xs:element type="DirDetector" name="DirDetector" maxOccurs="unbounded"/>
+            <xs:element type="ModuleDetectorType" name="ModuleDetector" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="PHPCircleType">
         <xs:sequence>
             <xs:element type="ModulesType" name="Modules" minOccurs="0"/>
-            <xs:element type="ModuleDetectorsType" name="ModuleDetectors" minOccurs="0"/>
+            <xs:element type="DetectorsType" name="Detectors" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

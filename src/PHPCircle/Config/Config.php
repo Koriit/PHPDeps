@@ -7,23 +7,24 @@
 namespace Koriit\PHPCircle\Config;
 
 use Koriit\PHPCircle\Modules\Module;
+use Koriit\PHPCircle\Modules\ModuleDetector;
 
 class Config
 {
     /** @var Module[] */
     private $modules;
 
-    /** @var DirDetector[] */
-    private $dirDetectors;
+    /** @var ModuleDetector[] */
+    private $moduleDetectors;
 
     /**
-     * @param Module[]      $modules
-     * @param DirDetector[] $dirDetectors
+     * @param Module[]         $modules
+     * @param ModuleDetector[] $moduleDetectors
      */
-    public function __construct(array $modules, array $dirDetectors)
+    public function __construct(array $modules, array $moduleDetectors)
     {
         $this->modules = $modules;
-        $this->dirDetectors = $dirDetectors;
+        $this->moduleDetectors = $moduleDetectors;
     }
 
     public function getModules()
@@ -31,8 +32,8 @@ class Config
         return $this->modules;
     }
 
-    public function getDirDetectors()
+    public function getModuleDetectors()
     {
-        return $this->dirDetectors;
+        return $this->moduleDetectors;
     }
 }

@@ -7,19 +7,19 @@
 namespace Koriit\PHPCircle\Test\UnitTests;
 
 use Koriit\PHPCircle\Modules\Module;
-use Koriit\PHPCircle\Modules\ModulesReader;
+use Koriit\PHPCircle\Modules\ModuleReader;
 use Koriit\PHPCircle\Tokenizer\DependenciesReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use PHPUnit_Framework_TestCase;
 
 class ModulesReaderTest extends PHPUnit_Framework_TestCase
 {
-    /** @var ModulesReader */
+    /** @var ModuleReader */
     private $reader;
 
     public function setUp()
     {
-        $this->reader = new ModulesReader(new DependenciesReader());
+        $this->reader = new ModuleReader(new DependenciesReader());
     }
 
     /**

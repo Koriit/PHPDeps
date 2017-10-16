@@ -19,7 +19,7 @@ use function array_values;
 use function is_dir;
 use function preg_match;
 
-class ModulesReader
+class ModuleReader
 {
     /** @var DependenciesReader */
     private $fileReader;

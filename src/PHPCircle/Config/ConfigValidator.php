@@ -32,7 +32,7 @@ class ConfigValidator
      */
     private function checkIfEmpty(Config $config)
     {
-        if (empty($config->getModules()) && empty($config->getDirDetectors())) {
+        if (empty($config->getModules()) && empty($config->getModuleDetectors())) {
             throw new InvalidConfig("Configuration cannot be empty");
         }
     }

@@ -44,10 +44,10 @@
             <Path>./src/PHPCircle/PHPCircleDependencies.php</Path>
         </Module>
     </Modules>
-    <!--<ModuleDetectors>-->
-    <!--<DirDetector>-->
+    <!--<Detectors>-->
+    <!--<ModuleDetector>-->
     <!--<Namespace>Koriit\PHPCircle</Namespace>-->
     <!--<Path>src/PHPCircle</Path>-->
-    <!--</DirDetector>-->
-    <!--</ModuleDetectors>-->
+    <!--</ModuleDetector>-->
+    <!--</Detectors>-->
 </PHPCircle>

@@ -12,14 +12,14 @@
             <Path>./src/Library/Module2</Path>
         </Module>
     </Modules>
-    <ModuleDetectors>
-        <DirDetector>
+    <Detectors>
+        <ModuleDetector>
             <Namespace>Vendor\Library1</Namespace>
             <Path>./src/Library1</Path>
-        </DirDetector>
-        <DirDetector>
+        </ModuleDetector>
+        <ModuleDetector>
             <Namespace>Vendor\Library2</Namespace>
             <Path>./src/Library2</Path>
-        </DirDetector>
-    </ModuleDetectors>
+        </ModuleDetector>
+    </Detectors>
 </PHPCircle>

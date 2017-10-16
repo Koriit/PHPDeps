@@ -12,6 +12,7 @@ use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\Modules\Module;
 use function dirname;
+use Koriit\PHPCircle\Modules\ModuleDetector;
 use function libxml_use_internal_errors;
 
 class ConfigReader
@@ -41,9 +42,9 @@ class ConfigReader
         $dir = realpath(dirname($filePath));
 
         $modules = $this->readModules($document, $dir);
-        $dirDetectors = $this->readDirDetectors($document, $dir);
+        $moduleDetectors = $this->readModuleDetectors($document, $dir);
 
-        $config = new Config($modules, $dirDetectors);
+        $config = new Config($modules, $moduleDetectors);
 
         $this->validator->check($config);
 
@@ -70,7 +71,7 @@ class ConfigReader
      *
      * @return Module[]
      */
-    private function readModules($document, $dir)
+    private function readModules(DOMDocument $document, $dir)
     {
         $modules = [];
         /** @var DOMElement $module */
@@ -89,20 +90,20 @@ class ConfigReader
      * @param DOMDocument $document
      * @param string      $dir Absolute path to relative directory
      *
-     * @return DirDetector[]
+     * @return ModuleDetector[]
      */
-    private function readDirDetectors($document, $dir)
+    private function readModuleDetectors(DOMDocument $document, $dir)
     {
-        $dirDetectors = [];
-        /** @var DOMElement $dirDetector */
-        foreach ($document->getElementsByTagName("DirDetector") as $dirDetector) {
-            $namespace = $dirDetector->getElementsByTagName("Namespace")->item(0)->nodeValue;
-            $path = $this->toAbsolutePath($dirDetector->getElementsByTagName("Path")->item(0)->nodeValue, $dir);
+        $moduleDetectors = [];
+        /** @var DOMElement $moduleDetector */
+        foreach ($document->getElementsByTagName("ModuleDetector") as $moduleDetector) {
+            $namespace = $moduleDetector->getElementsByTagName("Namespace")->item(0)->nodeValue;
+            $path = $this->toAbsolutePath($moduleDetector->getElementsByTagName("Path")->item(0)->nodeValue, $dir);
 
-            $dirDetectors[] = new DirDetector($namespace, $path);
+            $moduleDetectors[] = new ModuleDetector($namespace, $path);
         }
 
-        return $dirDetectors;
+        return $moduleDetectors;
     }
 
     /**

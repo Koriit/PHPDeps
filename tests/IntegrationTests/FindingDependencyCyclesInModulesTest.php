@@ -9,7 +9,7 @@ namespace Koriit\PHPCircle\Test\IntegrationTests;
 use Koriit\PHPCircle\Config\ConfigReader;
 use Koriit\PHPCircle\Config\ConfigValidator;
 use Koriit\PHPCircle\Modules\Module;
-use Koriit\PHPCircle\Modules\ModulesReader;
+use Koriit\PHPCircle\Modules\ModuleReader;
 use Koriit\PHPCircle\Tokenizer\DependenciesReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use PHPUnit_Framework_TestCase;
@@ -19,12 +19,12 @@ class FindingDependencyCyclesInModulesTest extends PHPUnit_Framework_TestCase
     /** @var ConfigReader */
     private $configReader;
 
-    /** @var ModulesReader */
-    private $modulesReader;
+    /** @var ModuleReader */
+    private $moduleReader;
 
     public function setUp()
     {
-        $this->modulesReader = new ModulesReader(new DependenciesReader());
+        $this->moduleReader = new ModuleReader(new DependenciesReader());
         $this->configReader = new ConfigReader(new ConfigValidator());
     }
 
@@ -44,7 +44,7 @@ class FindingDependencyCyclesInModulesTest extends PHPUnit_Framework_TestCase
     {
         $config = $this->configReader->readConfig($configFile);
 
-        $graph = $this->modulesReader->generateDependenciesGraph($config->getModules());
+        $graph = $this->moduleReader->generateDependenciesGraph($config->getModules());
         /** @var Module[][] $moduleCycles */
         $moduleCycles = $graph->findAllCycles();
 
