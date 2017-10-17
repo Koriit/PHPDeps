@@ -6,6 +6,9 @@
 
 namespace Koriit\PHPCircle\Modules;
 
+use function basename;
+use function glob;
+
 class ModuleDetector
 {
     /** @var string */
@@ -28,5 +31,20 @@ class ModuleDetector
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * @return Module[]
+     */
+    public function findModules()
+    {
+        $modules = [];
+
+        foreach (glob($this->path . '/*', GLOB_ONLYDIR) as $modulePath) {
+            $name = basename($modulePath);
+            $modules[] = new Module($name, $this->getNamespace() . '\\' . $name, $modulePath);
+        }
+
+        return $modules;
     }
 }
