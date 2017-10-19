@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PHPCircle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:noNamespaceSchemaLocation="src/PHPCircle/phpcircle.xsd">
+    <Modules>
+        <Module>
+            <Name>PHPCircleDependencies</Name>
+            <Namespace>Koriit\PHPCircle\PHPCircleDependencies</Namespace>
+            <Path>./src/PHPCircle/PHPCircleDependencies.php</Path>
+        </Module>
+        <Module>
+            <Name>PHPCircleApplication</Name>
+            <Namespace>Koriit\PHPCircle\PHPCircleApplication</Namespace>
+            <Path>./src/PHPCircle/PHPCircleApplication.php</Path>
+        </Module>
+    </Modules>
     <Detectors>
         <ModuleDetector>
             <Namespace>Koriit\PHPCircle</Namespace>
