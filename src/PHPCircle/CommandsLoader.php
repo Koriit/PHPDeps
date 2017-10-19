@@ -8,6 +8,7 @@ namespace Koriit\PHPCircle;
 
 
 use Koriit\PHPCircle\Commands\CheckCommand;
+use Koriit\PHPCircle\Commands\DependenciesCommand;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 
@@ -37,6 +38,7 @@ class CommandsLoader
     {
         return [
               CheckCommand::class,
+              DependenciesCommand::class,
         ];
     }
 
