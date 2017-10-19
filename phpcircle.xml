@@ -1,53 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PHPCircle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:noNamespaceSchemaLocation="src/PHPCircle/phpcircle.xsd">
-    <Modules>
-        <Module>
-            <Name>Tokenizer</Name>
-            <Namespace>Koriit\PHPCircle\Tokenizer</Namespace>
-            <Path>./src/PHPCircle/Tokenizer</Path>
-        </Module>
-
-        <Module>
-            <Name>Application</Name>
-            <Namespace>Koriit\PHPCircle\Application</Namespace>
-            <Path>./src/PHPCircle/Application</Path>
-        </Module>
-
-        <Module>
-            <Name>Graph</Name>
-            <Namespace>Koriit\PHPCircle\Graph</Namespace>
-            <Path>./src/PHPCircle/Graph</Path>
-        </Module>
-
-        <Module>
-            <Name>Modules</Name>
-            <Namespace>Koriit\PHPCircle\Modules</Namespace>
-            <Path>./src/PHPCircle/Modules</Path>
-        </Module>
-
-        <Module>
-            <Name>Commands</Name>
-            <Namespace>Koriit\PHPCircle\Commands</Namespace>
-            <Path>./src/PHPCircle/Commands</Path>
-        </Module>
-
-        <Module>
-            <Name>Config</Name>
-            <Namespace>Koriit\PHPCircle\Config</Namespace>
-            <Path>./src/PHPCircle/Config</Path>
-        </Module>
-
-        <Module>
-            <Name>PHPCircleDependencies</Name>
-            <Namespace>Koriit\PHPCircle\PHPCircleDependencies</Namespace>
-            <Path>./src/PHPCircle/PHPCircleDependencies.php</Path>
-        </Module>
-    </Modules>
-    <!--<Detectors>-->
-    <!--<ModuleDetector>-->
-    <!--<Namespace>Koriit\PHPCircle</Namespace>-->
-    <!--<Path>src/PHPCircle</Path>-->
-    <!--</ModuleDetector>-->
-    <!--</Detectors>-->
+    <Detectors>
+        <ModuleDetector>
+            <Namespace>Koriit\PHPCircle</Namespace>
+            <Path>./src/PHPCircle</Path>
+        </ModuleDetector>
+    </Detectors>
 </PHPCircle>
