@@ -36,7 +36,7 @@ class DirectedGraphTest extends PHPUnit_Framework_TestCase
         // Default comparator
         $expectedCycles = [[$obj2, $obj1]];
         $cycles = $graph->findAllCycles();
-        $this->assertEquals($expectedCycles, $cycles, print_r($cycles, true));
+        $this->assertEquals($expectedCycles, $cycles, \print_r($cycles, true));
 
         // Custom comparator
         $expectedCycles = [[$obj1, $obj2]];
@@ -58,7 +58,7 @@ class DirectedGraphTest extends PHPUnit_Framework_TestCase
     {
         /** @var Vertex[] $vertices */
         $vertices = [];
-        foreach (array_keys($neighbourhoods) as $module) {
+        foreach (\array_keys($neighbourhoods) as $module) {
             $vertices[$module] = new Vertex($module);
         }
 

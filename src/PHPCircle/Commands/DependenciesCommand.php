@@ -108,7 +108,7 @@ class DependenciesCommand extends Command
         $names = [];
         $duplicatedModules = [];
         foreach ($moduleNames as $name) {
-            if (in_array($name, $names)) {
+            if (\in_array($name, $names)) {
                 $duplicatedModules[] = $name;
             } else {
                 $names[] = $name;
@@ -127,7 +127,7 @@ class DependenciesCommand extends Command
     {
         $modules = $config->getModules();
         foreach ($config->getModuleDetectors() as $detector) {
-            $modules = array_merge($modules, $detector->findModules());
+            $modules = \array_merge($modules, $detector->findModules());
         }
 
         return $modules;

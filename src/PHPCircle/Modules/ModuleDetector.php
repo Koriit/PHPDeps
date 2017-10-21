@@ -37,8 +37,8 @@ class ModuleDetector
     {
         $modules = [];
 
-        foreach (glob($this->path . '/*', GLOB_ONLYDIR) as $modulePath) {
-            $name = basename($modulePath);
+        foreach (\glob($this->path . '/*', GLOB_ONLYDIR) as $modulePath) {
+            $name = \basename($modulePath);
             $modules[] = new Module($name, $this->getNamespace() . '\\' . $name, $modulePath);
         }
 

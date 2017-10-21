@@ -60,13 +60,13 @@ class ConfigReaderTest extends PHPUnit_Framework_TestCase
     public function shouldProperlyReadComplexConfig()
     {
         $modules = [
-              new Module('Module1', 'Vendor\Library\Module1', realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library/Module1'),
-              new Module('Module2', 'Vendor\Library\Module2', realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library/Module2'),
+              new Module('Module1', 'Vendor\Library\Module1', \realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library/Module1'),
+              new Module('Module2', 'Vendor\Library\Module2', \realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library/Module2'),
         ];
 
         $moduleDetectors = [
-              new ModuleDetector('Vendor\Library1', realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library1'),
-              new ModuleDetector('Vendor\Library2', realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library2'),
+              new ModuleDetector('Vendor\Library1', \realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library1'),
+              new ModuleDetector('Vendor\Library2', \realpath(__DIR__ . '/../Cases/Configs') . DIRECTORY_SEPARATOR . './src/Library2'),
         ];
         $expectedConfig = new Config($modules, $moduleDetectors);
 

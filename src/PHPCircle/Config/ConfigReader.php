@@ -38,7 +38,7 @@ class ConfigReader
 
         $this->validateSchema($document);
 
-        $dir = realpath(dirname($filePath));
+        $dir = \realpath(\dirname($filePath));
 
         $modules = $this->readModules($document, $dir);
         $moduleDetectors = $this->readModuleDetectors($document, $dir);
@@ -57,11 +57,11 @@ class ConfigReader
      */
     private function validateSchema(DOMDocument $document)
     {
-        $libxmlUseInternalErrors = libxml_use_internal_errors(true);
+        $libxmlUseInternalErrors = \libxml_use_internal_errors(true);
         if (!$document->schemaValidate(__DIR__ . '/../phpcircle.xsd')) {
             throw new InvalidSchema();
         }
-        libxml_use_internal_errors($libxmlUseInternalErrors);
+        \libxml_use_internal_errors($libxmlUseInternalErrors);
     }
 
     /**
@@ -115,7 +115,7 @@ class ConfigReader
      */
     private function toAbsolutePath($path, $dir)
     {
-        $path = trim($path);
+        $path = \trim($path);
         if ($path[0] === '/') {
             return $path;
         }
@@ -128,12 +128,12 @@ class ConfigReader
         //  - C:\windows
         //  - C:/windows
         //  - c:/windows
-        if (defined('PHP_WINDOWS_VERSION_BUILD') &&
-              ($path[0] === '\\' || (strlen($path) >= 3 && preg_match('#^[A-Z]\:[/\\\]#i', substr($path, 0, 3))))) {
+        if (\defined('PHP_WINDOWS_VERSION_BUILD') &&
+              ($path[0] === '\\' || (\strlen($path) >= 3 && \preg_match('#^[A-Z]\:[/\\\]#i', \substr($path, 0, 3))))) {
             return $path;
         }
         // Stream
-        if (strpos($path, '://') !== false) {
+        if (\strpos($path, '://') !== false) {
             return $path;
         }
 

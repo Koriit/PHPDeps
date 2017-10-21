@@ -41,7 +41,7 @@ class Vertex
      */
     public function addNeighbour(Vertex $neighbour)
     {
-        if (!in_array($neighbour, $this->neighbours)) {
+        if (!\in_array($neighbour, $this->neighbours)) {
             $this->neighbours[] = $neighbour;
         }
     }

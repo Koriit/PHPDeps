@@ -43,7 +43,7 @@ class ModuleReader
             $dependencies = $this->findModuleDependencies($vertex->getValue()->getPath());
             foreach ($dependencies as $dependency) {
                 foreach ($vertices as $neighbour) {
-                    if ($vertex !== $neighbour && preg_match($neighbour->getValue()->getPattern(), $dependency)) {
+                    if ($vertex !== $neighbour && \preg_match($neighbour->getValue()->getPattern(), $dependency)) {
                         $vertex->addNeighbour($neighbour);
                     }
                 }
@@ -65,14 +65,14 @@ class ModuleReader
         $dependencies = [];
         $files = $this->findPHPFiles($modulePath);
         foreach ($files as $file) {
-            $dependencies = array_merge($dependencies, $this->fileReader->findFileDependencies($file));
+            $dependencies = \array_merge($dependencies, $this->fileReader->findFileDependencies($file));
         }
 
         // remove duplicates
-        $dependencies = array_unique($dependencies);
+        $dependencies = \array_unique($dependencies);
 
         // reindex array
-        return array_values($dependencies);
+        return \array_values($dependencies);
     }
 
     /**
@@ -84,15 +84,15 @@ class ModuleReader
     {
         $files = [];
 
-        if (is_dir($modulePath)) {
+        if (\is_dir($modulePath)) {
             $dirIterator = new RecursiveDirectoryIterator($modulePath);
             $iterator = new RecursiveIteratorIterator($dirIterator);
             foreach ($iterator as $file) {
-                if (preg_match("/\.php$/i", $file)) {
+                if (\preg_match("/\.php$/i", $file)) {
                     $files[] = (string) $file;
                 }
             }
-        } elseif (is_file($modulePath)) {
+        } elseif (\is_file($modulePath)) {
             $files[] = $modulePath;
         } else {
             throw new RuntimeException('Module cannot be read or does not exist: ' . $modulePath);

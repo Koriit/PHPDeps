@@ -20,7 +20,7 @@ class TokensIterator extends ArrayIterator
      */
     public static function isToken($token, $tokenType)
     {
-        return is_array($token) && $token[0] === $tokenType;
+        return \is_array($token) && $token[0] === $tokenType;
     }
 
     /**
@@ -31,7 +31,7 @@ class TokensIterator extends ArrayIterator
      */
     public static function isOneOfTokens($token, array $tokenTypes)
     {
-        return is_array($token) && in_array($token[0], $tokenTypes, true);
+        return \is_array($token) && \in_array($token[0], $tokenTypes, true);
     }
 
     /**
@@ -41,7 +41,7 @@ class TokensIterator extends ArrayIterator
      */
     public static function fromContents($contents)
     {
-        return new static(token_get_all($contents));
+        return new static(\token_get_all($contents));
     }
 
     /**
@@ -51,7 +51,7 @@ class TokensIterator extends ArrayIterator
      */
     public static function fromFile($filePath)
     {
-        return static::fromContents(file_get_contents($filePath));
+        return static::fromContents(\file_get_contents($filePath));
     }
 
     /**

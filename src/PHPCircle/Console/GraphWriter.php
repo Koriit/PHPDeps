@@ -24,12 +24,12 @@ class GraphWriter
      */
     public function drawGraphCycle(array $nodes)
     {
-        if (count($nodes) < 2) {
+        if (\count($nodes) < 2) {
             throw new RuntimeException('Not enough nodes to draw a cycle');
         }
 
-        $firstNode = array_shift($nodes);
-        $lastNode = array_pop($nodes);
+        $firstNode = \array_shift($nodes);
+        $lastNode = \array_pop($nodes);
 
         $this->drawNode($firstNode);
 

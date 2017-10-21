@@ -14,7 +14,7 @@ class DirectedGraph
     public function __construct(array $vertices)
     {
         // Remove duplicates
-        $this->vertices = array_unique($vertices, SORT_REGULAR);
+        $this->vertices = \array_unique($vertices, SORT_REGULAR);
 
         $this->reindex();
     }
@@ -33,7 +33,7 @@ class DirectedGraph
     {
         $cycles = [];
 
-        $verticesCount = count($this->vertices);
+        $verticesCount = \count($this->vertices);
         foreach ($this->vertices as $vertex) {
             $visited = [];
             for ($i = 0; $i < $verticesCount; $i++) {
@@ -43,7 +43,7 @@ class DirectedGraph
             foreach ($vertex->getNeighbours() as $neighbour) {
                 $foundCycles = $this->findAllCyclesRecursive($vertex, $neighbour, $visited);
                 if ($foundCycles) {
-                    $cycles = array_merge($cycles, $foundCycles);
+                    $cycles = \array_merge($cycles, $foundCycles);
                 }
             }
         }
@@ -75,7 +75,7 @@ class DirectedGraph
         foreach ($current->getNeighbours() as $neighbour) {
             $foundCycles = $this->findAllCyclesRecursive($needle, $neighbour, $visited, $currentCycle);
             if ($foundCycles) {
-                $cycles = array_merge($cycles, $foundCycles);
+                $cycles = \array_merge($cycles, $foundCycles);
             }
         }
 
@@ -84,8 +84,8 @@ class DirectedGraph
 
     private function reindex()
     {
-        $this->vertices = array_values($this->vertices);
-        $verticesCount = count($this->vertices);
+        $this->vertices = \array_values($this->vertices);
+        $verticesCount = \count($this->vertices);
         for ($i = 0; $i < $verticesCount; $i++) {
             $this->vertices[$i]->setIndex($i);
         }
@@ -103,7 +103,7 @@ class DirectedGraph
             $comparator = $this->getDefaultComparator();
         }
 
-        $cyclesCount = count($cycles);
+        $cyclesCount = \count($cycles);
         for ($i = 0; $i < $cyclesCount; $i++) {
             $this->scrollCycle($cycles[$i], $comparator);
 
@@ -119,10 +119,10 @@ class DirectedGraph
         }
 
         // Sort the cycles themselves
-        usort($cycles, $comparator);
+        \usort($cycles, $comparator);
 
         // Reindex array
-        return array_values($cycles);
+        return \array_values($cycles);
     }
 
     /**
@@ -131,7 +131,7 @@ class DirectedGraph
      */
     private function scrollCycle(array &$array, callable $comparator)
     {
-        $count = count($array);
+        $count = \count($array);
         // Find minimal element
         $firstPos = 0;
         for ($i = 1; $i < $count; $i++) {
@@ -142,7 +142,7 @@ class DirectedGraph
 
         // Push the elements to the end of array until minimal element is at first position
         for ($i = 0; $i < $firstPos; $i++) {
-            array_push($array, array_shift($array));
+            \array_push($array, \array_shift($array));
         }
     }
 

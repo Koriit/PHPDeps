@@ -24,7 +24,7 @@ class ModuleDetectorTest extends PHPUnit_Framework_TestCase
     {
         $modules = $detector->findModules();
 
-        $this->assertCount(count($expectedModules), $modules);
+        $this->assertCount(\count($expectedModules), $modules);
 
         foreach ($modules as $module) {
             $this->assertEquals($expectedModules[$module->getName()], $module);
@@ -33,7 +33,7 @@ class ModuleDetectorTest extends PHPUnit_Framework_TestCase
 
     public function getDetectionCases()
     {
-        $casesDir = realpath(__DIR__ . '/../Cases/Detectors');
+        $casesDir = \realpath(__DIR__ . '/../Cases/Detectors');
 
         return [
               'Simple' => [

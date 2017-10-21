@@ -17,7 +17,7 @@ interface ApplicationInterface
     /**
      * Checks if the application is already running.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRunning();
 

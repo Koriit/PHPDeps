@@ -76,7 +76,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
     public function shouldGenerateModuleDependenciesGraph($case, array $expectations)
     {
         $modules = [];
-        $modulesCount = count($expectations);
+        $modulesCount = \count($expectations);
         for ($i = 1; $i <= $modulesCount; $i++) {
             $modules[] = new Module('Module' . $i, 'Vendor\Library\Module' . $i, __DIR__ . '/../Cases/Modules/' . $case . '/Module' . $i);
         }

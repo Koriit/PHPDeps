@@ -98,7 +98,7 @@ class CheckCommand extends Command
      */
     private function displayDependencyCycles(array $dependencyCycles, SymfonyStyle $io, $drawGraphs)
     {
-        $cyclesCount = count($dependencyCycles);
+        $cyclesCount = \count($dependencyCycles);
         $io->writeln('In total there ' . ($cyclesCount > 1 ? 'are 2 dependency cycles' : 'is 1 dependency cycle') . ' in your modules.');
 
         $i = 1;
@@ -137,7 +137,7 @@ class CheckCommand extends Command
         $names = [];
         $duplicatedModules = [];
         foreach ($moduleNames as $name) {
-            if (in_array($name, $names)) {
+            if (\in_array($name, $names)) {
                 $duplicatedModules[] = $name;
             } else {
                 $names[] = $name;
@@ -156,7 +156,7 @@ class CheckCommand extends Command
     {
         $modules = $config->getModules();
         foreach ($config->getModuleDetectors() as $detector) {
-            $modules = array_merge($modules, $detector->findModules());
+            $modules = \array_merge($modules, $detector->findModules());
         }
 
         return $modules;

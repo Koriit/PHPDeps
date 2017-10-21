@@ -46,7 +46,7 @@ class ConfigValidator
             $modules[] = $module->getName();
         }
 
-        if (count($modules) != count(array_unique($modules))) {
+        if (\count($modules) != \count(\array_unique($modules))) {
             throw new InvalidConfig('Two or more of your configured modules have the same name');
         }
     }
