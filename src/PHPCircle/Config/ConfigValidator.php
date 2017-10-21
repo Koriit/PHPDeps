@@ -6,10 +6,7 @@
 
 namespace Koriit\PHPCircle\Config;
 
-
 use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
-use function array_unique;
-use function count;
 
 class ConfigValidator
 {
@@ -33,7 +30,7 @@ class ConfigValidator
     private function checkIfEmpty(Config $config)
     {
         if (empty($config->getModules()) && empty($config->getModuleDetectors())) {
-            throw new InvalidConfig("Configuration cannot be empty");
+            throw new InvalidConfig('Configuration cannot be empty');
         }
     }
 
@@ -50,7 +47,7 @@ class ConfigValidator
         }
 
         if (count($modules) != count(array_unique($modules))) {
-            throw new InvalidConfig("Two or more of your configured modules have the same name");
+            throw new InvalidConfig('Two or more of your configured modules have the same name');
         }
     }
 }

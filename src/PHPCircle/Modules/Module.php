@@ -6,9 +6,6 @@
 
 namespace Koriit\PHPCircle\Modules;
 
-use function is_dir;
-use function str_replace;
-
 class Module
 {
     /** @var string */

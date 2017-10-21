@@ -3,7 +3,6 @@
 namespace Koriit\PHPCircle\Tokenizer\Exceptions;
 
 use Exception;
-use function is_array;
 
 class UnexpectedToken extends Exception
 {
@@ -14,7 +13,7 @@ class UnexpectedToken extends Exception
 
     public function __construct($token, $cause = null)
     {
-        parent::__construct("Unexpected token: " . (is_array($token) ? $token[1] : $token), 0, $cause);
+        parent::__construct('Unexpected token: ' . (is_array($token) ? $token[1] : $token), 0, $cause);
 
         $this->token = $token;
     }

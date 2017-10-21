@@ -6,9 +6,6 @@
 
 namespace Koriit\PHPCircle\Modules;
 
-use function basename;
-use function glob;
-
 class ModuleDetector
 {
     /** @var string */

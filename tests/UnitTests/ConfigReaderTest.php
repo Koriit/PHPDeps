@@ -9,12 +9,11 @@ namespace Koriit\PHPCircle\Test\UnitTests;
 use Koriit\PHPCircle\Config\Config;
 use Koriit\PHPCircle\Config\ConfigReader;
 use Koriit\PHPCircle\Config\ConfigValidator;
-use Koriit\PHPCircle\Modules\ModuleDetector;
 use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\Modules\Module;
+use Koriit\PHPCircle\Modules\ModuleDetector;
 use PHPUnit_Framework_TestCase;
-use const DIRECTORY_SEPARATOR;
 
 class ConfigReaderTest extends PHPUnit_Framework_TestCase
 {
@@ -28,6 +27,7 @@ class ConfigReaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     *
      * @throws InvalidSchema
      * @throws InvalidConfig
      */
@@ -40,6 +40,7 @@ class ConfigReaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     *
      * @throws InvalidSchema
      * @throws InvalidConfig
      */
@@ -52,6 +53,7 @@ class ConfigReaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     *
      * @throws InvalidSchema
      * @throws InvalidConfig
      */

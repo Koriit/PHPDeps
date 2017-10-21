@@ -13,11 +13,6 @@ use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
-use function array_merge;
-use function array_unique;
-use function array_values;
-use function is_dir;
-use function preg_match;
 
 class ModuleReader
 {
@@ -32,8 +27,9 @@ class ModuleReader
     /**
      * @param Module[] $modules
      *
-     * @return DirectedGraph Graph describing dependencies between modules
      * @throws MalformedFile
+     *
+     * @return DirectedGraph Graph describing dependencies between modules
      */
     public function generateDependenciesGraph(array $modules)
     {
@@ -60,8 +56,9 @@ class ModuleReader
     /**
      * @param string $modulePath Path to module, either file or directory
      *
-     * @return string[] List of module's dependencies
      * @throws MalformedFile
+     *
+     * @return string[] List of module's dependencies
      */
     public function findModuleDependencies($modulePath)
     {
@@ -95,12 +92,10 @@ class ModuleReader
                     $files[] = (string) $file;
                 }
             }
-
-        } else if (is_file($modulePath)) {
+        } elseif (is_file($modulePath)) {
             $files[] = $modulePath;
-
         } else {
-            throw new RuntimeException("Module cannot be read or does not exist: " . $modulePath);
+            throw new RuntimeException('Module cannot be read or does not exist: ' . $modulePath);
         }
 
         return $files;

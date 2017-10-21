@@ -6,7 +6,6 @@
 
 namespace Koriit\PHPCircle;
 
-
 use Exception;
 use Koriit\PHPCircle\Application\ApplicationInterface;
 use Koriit\PHPCircle\Application\Exceptions\ApplicationAlreadyRunning;
@@ -21,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PHPCircleApplication implements ApplicationInterface
 {
-    /** @var boolean */
+    /** @var bool */
     private $running;
 
     /** @var ContainerInterface */
@@ -61,7 +60,7 @@ class PHPCircleApplication implements ApplicationInterface
 
     public function getName()
     {
-        return "PHPCircle";
+        return 'PHPCircle';
     }
 
     public function isRunning()
@@ -90,7 +89,7 @@ class PHPCircleApplication implements ApplicationInterface
 
     protected function initialize()
     {
-        $this->consoleKernel->setName("<info>" . $this->getName() . "</info>, a tool for finding circular dependencies in your modules.");
+        $this->consoleKernel->setName('<info>' . $this->getName() . '</info>, a tool for finding circular dependencies in your modules.');
         $this->consoleKernel->setAutoExit(false);
     }
 
@@ -108,10 +107,11 @@ class PHPCircleApplication implements ApplicationInterface
     }
 
     /**
-     * @return int Exit code
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws Exception
+     *
+     * @return int Exit code
      */
     protected function executeCommand()
     {

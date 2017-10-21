@@ -2,6 +2,7 @@ preset: recommended
 
 enabled:
     - concat_with_spaces
+    - native_function_invocation
 
 disabled:
     - phpdoc_to_comment

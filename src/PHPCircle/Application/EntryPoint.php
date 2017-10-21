@@ -21,7 +21,7 @@ class EntryPoint
         try {
             $application = $this->createApplication($container, $appClass);
         } catch (Exception $e) {
-            throw new RuntimeException("Could not create application: " . $appClass, 0, $e);
+            throw new RuntimeException('Could not create application: ' . $appClass, 0, $e);
         }
 
         $application->run();
@@ -49,10 +49,10 @@ class EntryPoint
      * @param Container $container
      * @param string    $appClass
      *
-     * @return ApplicationInterface
-     *
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException
+     *
+     * @return ApplicationInterface
      */
     protected function createApplication(Container $container, $appClass)
     {

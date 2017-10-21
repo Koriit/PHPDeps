@@ -16,8 +16,8 @@ class VertexTest extends PHPUnit_Framework_TestCase
      */
     public function shouldAddNeighbourOnlyOnce()
     {
-        $vertex = new Vertex("Vertex");
-        $neighbour = new Vertex("Neighbour");
+        $vertex = new Vertex('Vertex');
+        $neighbour = new Vertex('Neighbour');
 
         // Add first time
         $vertex->addNeighbour($neighbour);

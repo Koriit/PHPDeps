@@ -25,6 +25,7 @@ class ConfigValidatorTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     *
      * @throws InvalidConfig
      */
     public function shouldThrowWhenEmptyConfig()
@@ -36,6 +37,7 @@ class ConfigValidatorTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     *
      * @throws InvalidConfig
      * @throws InvalidSchema
      */

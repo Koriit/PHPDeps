@@ -37,7 +37,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
               "Vendor\Library2\Module\SomeClass",
         ];
 
-        $module = __DIR__ . "/../Cases/Modules/DirModule";
+        $module = __DIR__ . '/../Cases/Modules/DirModule';
 
         $dependencies = $this->reader->findModuleDependencies($module);
 
@@ -56,7 +56,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
               "Vendor\Library\Module2\Package\SomeOtherClass",
         ];
 
-        $module = __DIR__ . "/../Cases/Modules/DirModule/Class.php";
+        $module = __DIR__ . '/../Cases/Modules/DirModule/Class.php';
 
         $dependencies = $this->reader->findModuleDependencies($module);
 
@@ -96,47 +96,47 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
     public function getGraphCases()
     {
         return [
-              "Acyclic Modules" => [
+              'Acyclic Modules' => [
                     'AcyclicModules',
                     [
-                          "Module1" => [],
-                          "Module2" => [],
+                          'Module1' => [],
+                          'Module2' => [],
                     ],
               ],
 
-              "Two Cyclic Modules" => [
+              'Two Cyclic Modules' => [
                     'TwoCyclicModules',
                     [
-                          "Module1" => ["Module2"],
-                          "Module2" => ["Module1"],
+                          'Module1' => ['Module2'],
+                          'Module2' => ['Module1'],
                     ],
               ],
 
-              "Three Cyclic Modules" => [
+              'Three Cyclic Modules' => [
                     'ThreeCyclicModules',
                     [
-                          "Module1" => ["Module2"],
-                          "Module2" => ["Module3"],
-                          "Module3" => ["Module1"],
+                          'Module1' => ['Module2'],
+                          'Module2' => ['Module3'],
+                          'Module3' => ['Module1'],
                     ],
               ],
 
-              "Two Connected Cycles" => [
+              'Two Connected Cycles' => [
                     'TwoConnectedCycles',
                     [
-                          "Module1" => ["Module2"],
-                          "Module2" => ["Module1", "Module3"],
-                          "Module3" => ["Module2"],
+                          'Module1' => ['Module2'],
+                          'Module2' => ['Module1', 'Module3'],
+                          'Module3' => ['Module2'],
                     ],
               ],
 
-              "Two Disconnected Cycles" => [
+              'Two Disconnected Cycles' => [
                     'TwoDisconnectedCycles',
                     [
-                          "Module1" => ["Module2"],
-                          "Module2" => ["Module1"],
-                          "Module3" => ["Module4"],
-                          "Module4" => ["Module3"],
+                          'Module1' => ['Module2'],
+                          'Module2' => ['Module1'],
+                          'Module3' => ['Module4'],
+                          'Module4' => ['Module3'],
                     ],
               ],
         ];

@@ -6,8 +6,6 @@
 
 namespace Koriit\PHPCircle\Graph;
 
-use function in_array;
-
 class Vertex
 {
     /** @var mixed Held value */

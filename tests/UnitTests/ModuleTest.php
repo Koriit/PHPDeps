@@ -16,7 +16,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
      */
     public function shouldReturnProperPatternForFile()
     {
-        $module = new Module("Test", 'Some\Namespace\Module\Class', __FILE__);
+        $module = new Module('Test', 'Some\Namespace\Module\Class', __FILE__);
 
         $pattern = $module->getPattern();
 
@@ -28,7 +28,7 @@ class ModuleTest extends PHPUnit_Framework_TestCase
      */
     public function shouldReturnProperPatternForDir()
     {
-        $module = new Module("Test", 'Some\Namespace\Module', __DIR__);
+        $module = new Module('Test', 'Some\Namespace\Module', __DIR__);
 
         $pattern = $module->getPattern();
 

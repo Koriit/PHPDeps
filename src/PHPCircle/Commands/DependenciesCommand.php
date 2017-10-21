@@ -15,8 +15,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use function array_merge;
-use function in_array;
 
 class DependenciesCommand extends Command
 {
@@ -37,23 +35,24 @@ class DependenciesCommand extends Command
     protected function configure()
     {
         $this
-              ->setName("dependencies")
-              ->setDescription("Lists modules and their dependencies.")
-              ->addOption("config", 'c', InputOption::VALUE_OPTIONAL, "Custom location of configuration file", "./phpcircle.xml");
+              ->setName('dependencies')
+              ->setDescription('Lists modules and their dependencies.')
+              ->addOption('config', 'c', InputOption::VALUE_OPTIONAL, 'Custom location of configuration file', './phpcircle.xml');
     }
 
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return int
      * @throws InvalidConfig
      * @throws InvalidSchema
      * @throws MalformedFile
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $configFile = $input->getOption("config");
+        $configFile = $input->getOption('config');
 
         $io = new SymfonyStyle($input, $output);
 
@@ -63,8 +62,8 @@ class DependenciesCommand extends Command
 
         $duplicatedModules = $this->findModuleDuplicates($modules);
         if (!empty($duplicatedModules)) {
-            $io->error("Two or more of your configured modules have the same name");
-            $io->section("Duplicated modules");
+            $io->error('Two or more of your configured modules have the same name');
+            $io->section('Duplicated modules');
             $io->listing($duplicatedModules);
 
             return ExitCodes::UNEXPECTED_ERROR;

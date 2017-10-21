@@ -9,7 +9,6 @@ namespace Koriit\PHPCircle\Test\UnitTests;
 use Koriit\PHPCircle\Console\GraphWriter;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
-use const PHP_EOL;
 
 class GraphWriterTest extends PHPUnit_Framework_TestCase
 {
@@ -43,31 +42,31 @@ class GraphWriterTest extends PHPUnit_Framework_TestCase
     public function outputCases()
     {
         return [
-              "TwoNodes" => [
-                    ["A", "B"],
-                    "* A" . PHP_EOL .
-                    "↕" . PHP_EOL .
-                    "* B" . PHP_EOL,
+              'TwoNodes' => [
+                    ['A', 'B'],
+                    '* A' . PHP_EOL .
+                    '↕' . PHP_EOL .
+                    '* B' . PHP_EOL,
               ],
 
-              "ThreeNodes" => [
-                    ["A", "B", "C"],
-                    "* A" . PHP_EOL .
-                    "↑↘" . PHP_EOL .
-                    "↑ * B" . PHP_EOL .
-                    "↑↙" . PHP_EOL .
-                    "* C" . PHP_EOL,
+              'ThreeNodes' => [
+                    ['A', 'B', 'C'],
+                    '* A' . PHP_EOL .
+                    '↑↘' . PHP_EOL .
+                    '↑ * B' . PHP_EOL .
+                    '↑↙' . PHP_EOL .
+                    '* C' . PHP_EOL,
               ],
 
-              "FourNodes" => [
-                    ["A", "B", "C", "D"],
-                    "* A" . PHP_EOL .
-                    "↑↘" . PHP_EOL .
-                    "↑ * B" . PHP_EOL .
-                    "↑ ↓" . PHP_EOL .
-                    "↑ * C" . PHP_EOL .
-                    "↑↙" . PHP_EOL .
-                    "* D" . PHP_EOL,
+              'FourNodes' => [
+                    ['A', 'B', 'C', 'D'],
+                    '* A' . PHP_EOL .
+                    '↑↘' . PHP_EOL .
+                    '↑ * B' . PHP_EOL .
+                    '↑ ↓' . PHP_EOL .
+                    '↑ * C' . PHP_EOL .
+                    '↑↙' . PHP_EOL .
+                    '* D' . PHP_EOL,
               ],
         ];
     }

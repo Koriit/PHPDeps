@@ -6,11 +6,9 @@
 
 namespace Koriit\PHPCircle\Tokenizer;
 
-
 use ArrayIterator;
 use Koriit\PHPCircle\Tokenizer\Exceptions\UnexpectedTokensEnd;
 use Koriit\PHPCircle\Tokenizer\Exceptions\WrongPosition;
-use const T_WHITESPACE;
 
 class TokensIterator extends ArrayIterator
 {
@@ -87,7 +85,7 @@ class TokensIterator extends ArrayIterator
     public function skipBlock()
     {
         if (!$this->valid() || $this->current() !== '{') {
-            throw new WrongPosition("Not at block beginning position.");
+            throw new WrongPosition('Not at block beginning position.');
         }
 
         $counter = 1;
@@ -95,7 +93,7 @@ class TokensIterator extends ArrayIterator
         while ($this->valid() && $counter > 0) {
             if ($this->current() === '{') {
                 $counter++;
-            } else if ($this->current() === '}') {
+            } elseif ($this->current() === '}') {
                 $counter--;
             }
 

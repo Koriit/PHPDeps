@@ -22,6 +22,7 @@ class DependenciesReaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     *
      * @throws MalformedFile
      */
     public function shouldThrowWhenMalformedSyntax()
@@ -33,6 +34,7 @@ class DependenciesReaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     *
      * @throws MalformedFile
      */
     public function shouldThrowWhenFileInterrupted()
@@ -58,7 +60,6 @@ class DependenciesReaderTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedList, $resultList);
     }
-
 
     public function getFileCases()
     {

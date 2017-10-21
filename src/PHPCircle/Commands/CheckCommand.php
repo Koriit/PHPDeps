@@ -2,8 +2,6 @@
 
 namespace Koriit\PHPCircle\Commands;
 
-use function array_merge;
-use function in_array;
 use Koriit\PHPCircle\Config\Config;
 use Koriit\PHPCircle\Config\ConfigReader;
 use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
@@ -42,25 +40,26 @@ class CheckCommand extends Command
     protected function configure()
     {
         $this
-              ->setName("check")
-              ->setDescription("Check whether there are circular dependencies in modules.")
-              ->addOption("config", 'c', InputOption::VALUE_OPTIONAL, "Custom location of configuration file", "./phpcircle.xml")
-              ->addOption("graphs", 'g', InputOption::VALUE_NONE, "Whether to display dependency cycles as graphs(assumed with -v)");
+              ->setName('check')
+              ->setDescription('Check whether there are circular dependencies in modules.')
+              ->addOption('config', 'c', InputOption::VALUE_OPTIONAL, 'Custom location of configuration file', './phpcircle.xml')
+              ->addOption('graphs', 'g', InputOption::VALUE_NONE, 'Whether to display dependency cycles as graphs(assumed with -v)');
     }
 
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return int
      * @throws InvalidConfig
      * @throws InvalidSchema
      * @throws MalformedFile
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $drawGraphs = $output->isVerbose() || $input->getOption('graphs');
-        $configFile = $input->getOption("config");
+        $configFile = $input->getOption('config');
 
         $io = new SymfonyStyle($input, $output);
 
@@ -70,8 +69,8 @@ class CheckCommand extends Command
 
         $duplicatedModules = $this->findModuleDuplicates($modules);
         if (!empty($duplicatedModules)) {
-            $io->error("Two or more of your configured modules have the same name");
-            $io->section("Duplicated modules");
+            $io->error('Two or more of your configured modules have the same name');
+            $io->section('Duplicated modules');
             $io->listing($duplicatedModules);
 
             return ExitCodes::UNEXPECTED_ERROR;
@@ -83,7 +82,6 @@ class CheckCommand extends Command
             $io->success('There are no circular dependencies in your modules!');
 
             return ExitCodes::OK;
-
         } else {
             $io->warning('There are circular dependencies in your modules!');
 
@@ -167,8 +165,9 @@ class CheckCommand extends Command
     /**
      * @param Module[] $modules
      *
-     * @return Module[][]
      * @throws MalformedFile
+     *
+     * @return Module[][]
      */
     private function findDependencyCycles($modules)
     {

@@ -6,7 +6,6 @@
 
 namespace Koriit\PHPCircle\Config\Exceptions;
 
-
 use Exception;
 
 class InvalidConfig extends Exception

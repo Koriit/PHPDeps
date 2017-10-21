@@ -6,13 +6,12 @@
 
 namespace Koriit\PHPCircle\Config\Exceptions;
 
-
 use Exception;
 
 class InvalidSchema extends Exception
 {
     public function __construct($cause = null)
     {
-        parent::__construct("File does not pass schema validation", 0, $cause);
+        parent::__construct('File does not pass schema validation', 0, $cause);
     }
 }

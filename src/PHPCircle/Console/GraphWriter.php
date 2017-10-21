@@ -6,11 +6,8 @@
 
 namespace Koriit\PHPCircle\Console;
 
-
 use RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
-use function array_pop;
-use function array_shift;
 
 class GraphWriter
 {
@@ -28,7 +25,7 @@ class GraphWriter
     public function drawGraphCycle(array $nodes)
     {
         if (count($nodes) < 2) {
-            throw new RuntimeException("Not enough nodes to draw a cycle");
+            throw new RuntimeException('Not enough nodes to draw a cycle');
         }
 
         $firstNode = array_shift($nodes);
@@ -47,7 +44,6 @@ class GraphWriter
                 $this->drawNode($node);
             }
             $this->drawLine('↑↙');
-
         } else {
             $this->drawLine('↕');
         }

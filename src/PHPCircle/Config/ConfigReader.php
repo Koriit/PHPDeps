@@ -11,9 +11,7 @@ use DOMElement;
 use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\Modules\Module;
-use function dirname;
 use Koriit\PHPCircle\Modules\ModuleDetector;
-use function libxml_use_internal_errors;
 
 class ConfigReader
 {
@@ -28,9 +26,10 @@ class ConfigReader
     /**
      * @param string $filePath Path to XML config file
      *
-     * @return Config
      * @throws InvalidSchema
      * @throws InvalidConfig
+     *
+     * @return Config
      */
     public function readConfig($filePath)
     {
@@ -56,7 +55,7 @@ class ConfigReader
      *
      * @throws InvalidSchema
      */
-    private function validateSchema($document)
+    private function validateSchema(DOMDocument $document)
     {
         $libxmlUseInternalErrors = libxml_use_internal_errors(true);
         if (!$document->schemaValidate(__DIR__ . '/../phpcircle.xsd')) {
@@ -67,7 +66,7 @@ class ConfigReader
 
     /**
      * @param DOMDocument $document
-     * @param string      $dir Absolute path to relative directory
+     * @param string      $dir      Absolute path to relative directory
      *
      * @return Module[]
      */
@@ -75,10 +74,10 @@ class ConfigReader
     {
         $modules = [];
         /** @var DOMElement $module */
-        foreach ($document->getElementsByTagName("Module") as $module) {
-            $name = $module->getElementsByTagName("Name")->item(0)->nodeValue;
-            $namespace = $module->getElementsByTagName("Namespace")->item(0)->nodeValue;
-            $path = $this->toAbsolutePath($module->getElementsByTagName("Path")->item(0)->nodeValue, $dir);
+        foreach ($document->getElementsByTagName('Module') as $module) {
+            $name = $module->getElementsByTagName('Name')->item(0)->nodeValue;
+            $namespace = $module->getElementsByTagName('Namespace')->item(0)->nodeValue;
+            $path = $this->toAbsolutePath($module->getElementsByTagName('Path')->item(0)->nodeValue, $dir);
 
             $modules[] = new Module($name, $namespace, $path);
         }
@@ -88,7 +87,7 @@ class ConfigReader
 
     /**
      * @param DOMDocument $document
-     * @param string      $dir Absolute path to relative directory
+     * @param string      $dir      Absolute path to relative directory
      *
      * @return ModuleDetector[]
      */
@@ -96,9 +95,9 @@ class ConfigReader
     {
         $moduleDetectors = [];
         /** @var DOMElement $moduleDetector */
-        foreach ($document->getElementsByTagName("ModuleDetector") as $moduleDetector) {
-            $namespace = $moduleDetector->getElementsByTagName("Namespace")->item(0)->nodeValue;
-            $path = $this->toAbsolutePath($moduleDetector->getElementsByTagName("Path")->item(0)->nodeValue, $dir);
+        foreach ($document->getElementsByTagName('ModuleDetector') as $moduleDetector) {
+            $namespace = $moduleDetector->getElementsByTagName('Namespace')->item(0)->nodeValue;
+            $path = $this->toAbsolutePath($moduleDetector->getElementsByTagName('Path')->item(0)->nodeValue, $dir);
 
             $moduleDetectors[] = new ModuleDetector($namespace, $path);
         }
@@ -108,11 +107,11 @@ class ConfigReader
 
     /**
      * @param string $path
-     * @param string $dir Absolute path to relative directory
+     * @param string $dir  Absolute path to relative directory
      *
      * @return string
-     * @see https://github.com/sebastianbergmann/phpunit/blob/976b986778e2962577440b93d481e67576124e0d/src/Util/Configuration.php#L1156
      *
+     * @see https://github.com/sebastianbergmann/phpunit/blob/976b986778e2962577440b93d481e67576124e0d/src/Util/Configuration.php#L1156
      */
     private function toAbsolutePath($path, $dir)
     {

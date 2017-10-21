@@ -13,7 +13,7 @@ class MalformedFile extends Exception
 
     public function __construct($filePath, $cause = null)
     {
-        parent::__construct("Malformed file: " . $filePath, 0, $cause);
+        parent::__construct('Malformed file: ' . $filePath, 0, $cause);
 
         $this->filePath = $filePath;
     }

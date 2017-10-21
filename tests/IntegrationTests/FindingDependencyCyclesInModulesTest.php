@@ -64,23 +64,23 @@ class FindingDependencyCyclesInModulesTest extends PHPUnit_Framework_TestCase
     public function getGraphCases()
     {
         return [
-              "Acyclic Modules" => [
+              'Acyclic Modules' => [
                     __DIR__ . '/../Cases/Integration/AcyclicModules/phpcircle.xml',
                     [],
               ],
 
-              "Three Cyclic Modules" => [
+              'Three Cyclic Modules' => [
                     __DIR__ . '/../Cases/Integration/ThreeCyclicModules/phpcircle.xml',
                     [
-                          ["Module1", "Module2", "Module3"],
+                          ['Module1', 'Module2', 'Module3'],
                     ],
               ],
 
-              "Two Disconnected Cycles" => [
+              'Two Disconnected Cycles' => [
                     __DIR__ . '/../Cases/Integration/TwoDisconnectedCycles/phpcircle.xml',
                     [
-                          ["Module1", "Module2"],
-                          ["Module3", "Module4"],
+                          ['Module1', 'Module2'],
+                          ['Module3', 'Module4'],
                     ],
               ],
         ];
