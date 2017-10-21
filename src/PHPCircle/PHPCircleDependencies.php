@@ -6,24 +6,20 @@
 
 namespace Koriit\PHPCircle;
 
-use DI\Scope;
-use Koriit\EventDispatcher\EventDispatcher;
-use Koriit\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use function DI\object;
 
 class PHPCircleDependencies
 {
     public function __invoke()
     {
         return [
-              EventDispatcherInterface::class => \DI\object(EventDispatcher::class)->scope(Scope::PROTOTYPE),
+              InputInterface::class => object(ArgvInput::class),
 
-              InputInterface::class => \DI\object(ArgvInput::class),
-
-              OutputInterface::class => \DI\object(ConsoleOutput::class),
+              OutputInterface::class => object(ConsoleOutput::class),
         ];
     }
 }
