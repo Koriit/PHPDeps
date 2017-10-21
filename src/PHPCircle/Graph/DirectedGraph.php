@@ -59,7 +59,7 @@ class DirectedGraph
      *
      * @return array|bool
      */
-    private function findAllCyclesRecursive($needle, $current, &$visited, $currentCycle = [])
+    private function findAllCyclesRecursive(Vertex $needle, Vertex $current, &$visited, $currentCycle = [])
     {
         if ($visited[$current->getIndex()]) {
             return false;
@@ -99,7 +99,7 @@ class DirectedGraph
      */
     private function sortAndRemoveDuplicateCycles(array $cycles, callable $comparator = null)
     {
-        if ($comparator == null) {
+        if ($comparator === null) {
             $comparator = $this->getDefaultComparator();
         }
 
