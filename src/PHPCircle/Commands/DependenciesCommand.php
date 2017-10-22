@@ -2,6 +2,7 @@
 
 namespace Koriit\PHPCircle\Commands;
 
+use function implode;
 use Koriit\PHPCircle\Config\Config;
 use Koriit\PHPCircle\Config\ConfigReader;
 use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
@@ -12,13 +13,16 @@ use Koriit\PHPCircle\Graph\Vertex;
 use Koriit\PHPCircle\Modules\Module;
 use Koriit\PHPCircle\Modules\ModuleReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
+use function print_r;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use function array_filter;
+use function array_walk;
+use function explode;
+use function in_array;
 
 class DependenciesCommand extends Command
 {
@@ -40,8 +44,8 @@ class DependenciesCommand extends Command
     {
         $this
               ->setName('dependencies')
-              ->setDescription('Lists module dependencies.')
-              ->addArgument('module', InputArgument::OPTIONAL, 'Name of module to display. If omitted all modules are displayed')
+              ->setDescription('Lists module dependencies')
+              ->addOption('filter', 'f', InputOption::VALUE_OPTIONAL, 'Comma separated list of module names to show', '')
               ->addOption('config', 'c', InputOption::VALUE_OPTIONAL, 'Custom location of configuration file', './phpcircle.xml');
     }
 
@@ -57,32 +61,26 @@ class DependenciesCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $configFile = $input->getOption('config');
-        $moduleName = $input->getArgument('module');
-
         $io = new SymfonyStyle($input, $output);
 
-        $config = $this->configReader->readConfig($configFile);
+        $config = $this->readConfig($input);
+        $filters = $this->readFilters($input);
 
         $modules = $this->findModules($config);
-
         if (!$this->validateModules($modules, $io)) {
             return ExitCodes::UNEXPECTED_ERROR;
         }
 
         $dependenciesGraph = $this->modulesReader->generateDependenciesGraph($modules);
+        $this->displayModules($dependenciesGraph, $io, $filters);
 
-        if ($moduleName === null) {
-            return $this->displayModules($dependenciesGraph, $io);
-        } else {
-            return $this->displayModule($dependenciesGraph, $moduleName, $io);
-        }
+        return ExitCodes::OK;
     }
 
     /**
      * @param Module[] $modules
      *
-     * @return string[]
+     * @return string[] Names of duplicated modules
      */
     private function findModuleDuplicates(array $modules)
     {
@@ -109,7 +107,7 @@ class DependenciesCommand extends Command
      *
      * @return Module[]
      */
-    private function findModules($config)
+    private function findModules(Config $config)
     {
         $modules = $config->getModules();
         foreach ($config->getModuleDetectors() as $detector) {
@@ -121,42 +119,32 @@ class DependenciesCommand extends Command
 
     /**
      * @param DirectedGraph $dependenciesGraph
-     * @param string        $moduleName Name of module to display
      * @param SymfonyStyle  $io
-     *
-     * @return int Exit code
+     * @param string[]      $filters Filtered module names
      */
-    private function displayModule(DirectedGraph $dependenciesGraph, $moduleName, SymfonyStyle $io)
+    private function displayModules(DirectedGraph $dependenciesGraph, SymfonyStyle $io, array $filters)
     {
-        $vertex = $dependenciesGraph->search(function (Vertex $v) use ($moduleName) {
-            return $v->getValue()->getName() === $moduleName;
-        });
-
-        if ($vertex === null) {
-            $io->error('Module "' . $moduleName . '" not found."');
-
-            return ExitCodes::UNEXPECTED_ERROR;
+        if ($io->isVerbose()) {
+            if (empty($filters)) {
+                $io->writeln('No filters applied.');
+            } else {
+                $io->writeln('Displaying modules with following filter: ' . implode(', ', $filters));
+            }
+            $io->newLine();
+            $io->writeln('Modules:');
         }
 
-        $this->renderModule($io, $vertex);
+        $vertices = $dependenciesGraph->getVertices();
+        if (!empty($filters)) {
+            $vertices = \array_filter($vertices, function (Vertex $v) use ($filters) {
+                return \in_array($v->getValue()->getName(), $filters);
+            });
+        }
 
-        return ExitCodes::OK;
-    }
-
-    /**
-     * @param DirectedGraph $dependenciesGraph
-     * @param SymfonyStyle  $io
-     *
-     * @return int Exit code
-     */
-    private function displayModules(DirectedGraph $dependenciesGraph, SymfonyStyle $io)
-    {
         $i = 1;
-        foreach ($dependenciesGraph->getVertices() as $vertex) {
+        foreach ($vertices as $vertex) {
             $this->renderModule($io, $vertex, $i++);
         }
-
-        return ExitCodes::OK;
     }
 
     /**
@@ -182,13 +170,13 @@ class DependenciesCommand extends Command
     /**
      * @param SymfonyStyle $io
      * @param Vertex       $vertex Module's vertex
-     * @param int|null     $index  Whether module name should be prefixed with index number
+     * @param int          $index  List index
      */
-    private function renderModule(SymfonyStyle $io, Vertex $vertex, $index = null)
+    private function renderModule(SymfonyStyle $io, Vertex $vertex, $index)
     {
         /** @var Module $module */
         $module = $vertex->getValue();
-        $io->section(($index !== null ? $index . '. ' : '') . $module->getName() . ' [<fg=magenta>' . $module->getNamespace() . '</>]');
+        $io->section($index . '. ' . $module->getName() . ' [<fg=magenta>' . $module->getNamespace() . '</>]');
 
         $dependencies = [];
         foreach ($vertex->getNeighbours() as $neighbour) {
@@ -202,5 +190,39 @@ class DependenciesCommand extends Command
         } else {
             $io->text('No dependencies');
         }
+    }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @throws InvalidConfig
+     * @throws InvalidSchema
+     *
+     * @return Config
+     */
+    private function readConfig(InputInterface $input)
+    {
+        $configFile = $input->getOption('config');
+
+        return $this->configReader->readConfig($configFile);
+    }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @return string[] Array of filtered module names
+     */
+    private function readFilters(InputInterface $input)
+    {
+        $filters = $input->getOption('filter');
+        if (empty(\trim($filters))) {
+            return [];
+        }
+
+        $filters = \explode(',', $filters);
+        \array_walk($filters, 'trim');
+        \sort($filters);
+
+        return $filters;
     }
 }

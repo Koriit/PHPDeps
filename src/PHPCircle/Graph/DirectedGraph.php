@@ -6,8 +6,6 @@
 
 namespace Koriit\PHPCircle\Graph;
 
-use function call_user_func;
-
 class DirectedGraph
 {
     /** @var Vertex[] */
@@ -156,25 +154,5 @@ class DirectedGraph
         return function ($a, $b) {
             return $a > $b ? 1 : ($a < $b ? -1 : 0);
         };
-    }
-
-    /**
-     * Searches for a vertex using provided callback.
-     *
-     * @param callable $searchCallback Callback used to find the needle.
-     *                                 Receives single Vertex argument and should return
-     *                                 boolean true if element found or false otherwise.
-     *
-     * @return Vertex|null First found vertex or null if none found
-     */
-    public function search(callable $searchCallback)
-    {
-        foreach ($this->vertices as $vertex) {
-            if (call_user_func($searchCallback, $vertex)) {
-                return $vertex;
-            }
-        }
-
-        return null;
     }
 }
