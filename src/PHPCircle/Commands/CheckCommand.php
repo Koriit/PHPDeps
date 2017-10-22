@@ -58,21 +58,13 @@ class CheckCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $drawGraphs = $output->isVerbose() || $input->getOption('graphs');
-        $configFile = $input->getOption('config');
-
         $io = new SymfonyStyle($input, $output);
 
-        $config = $this->configReader->readConfig($configFile);
+        $config = $this->readConfig($input);
+        $drawGraphs = $output->isVerbose() || $input->getOption('graphs');
 
         $modules = $this->findModules($config);
-
-        $duplicatedModules = $this->findModuleDuplicates($modules);
-        if (!empty($duplicatedModules)) {
-            $io->error('Two or more of your configured modules have the same name');
-            $io->section('Duplicated modules');
-            $io->listing($duplicatedModules);
-
+        if (!$this->validateModules($modules, $io)) {
             return ExitCodes::UNEXPECTED_ERROR;
         }
 
@@ -99,7 +91,7 @@ class CheckCommand extends Command
     private function displayDependencyCycles(array $dependencyCycles, SymfonyStyle $io, $drawGraphs)
     {
         $cyclesCount = \count($dependencyCycles);
-        $io->writeln('In total there ' . ($cyclesCount > 1 ? 'are 2 dependency cycles' : 'is 1 dependency cycle') . ' in your modules.');
+        $io->writeln('In total there ' . ($cyclesCount > 1 ? 'are ' . $cyclesCount .' dependency cycles' : 'is 1 dependency cycle') . ' in your modules.');
 
         $i = 1;
         foreach ($dependencyCycles as $cycle) {
@@ -174,5 +166,41 @@ class CheckCommand extends Command
         $dependenciesGraph = $this->modulesReader->generateDependenciesGraph($modules);
 
         return $dependenciesGraph->findAllCycles();
+    }
+
+
+    /**
+     * @param Module[]     $modules
+     * @param SymfonyStyle $io
+     *
+     * @return bool True if everything is valid, false otherwise
+     */
+    private function validateModules(array $modules, SymfonyStyle $io)
+    {
+        $duplicatedModules = $this->findModuleDuplicates($modules);
+        if (!empty($duplicatedModules)) {
+            $io->error('Two or more of your configured modules have the same name');
+            $io->section('Duplicated modules');
+            $io->listing($duplicatedModules);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @throws InvalidConfig
+     * @throws InvalidSchema
+     *
+     * @return Config
+     */
+    private function readConfig(InputInterface $input)
+    {
+        $configFile = $input->getOption('config');
+
+        return $this->configReader->readConfig($configFile);
     }
 }

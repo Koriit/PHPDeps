@@ -148,26 +148,6 @@ class DependenciesCommand extends Command
     }
 
     /**
-     * @param Module[]     $modules
-     * @param SymfonyStyle $io
-     *
-     * @return bool True if everything is valid, false otherwise
-     */
-    private function validateModules(array $modules, SymfonyStyle $io)
-    {
-        $duplicatedModules = $this->findModuleDuplicates($modules);
-        if (!empty($duplicatedModules)) {
-            $io->error('Two or more of your configured modules have the same name');
-            $io->section('Duplicated modules');
-            $io->listing($duplicatedModules);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * @param SymfonyStyle $io
      * @param Vertex       $vertex Module's vertex
      * @param int          $index  List index
@@ -195,21 +175,6 @@ class DependenciesCommand extends Command
     /**
      * @param InputInterface $input
      *
-     * @throws InvalidConfig
-     * @throws InvalidSchema
-     *
-     * @return Config
-     */
-    private function readConfig(InputInterface $input)
-    {
-        $configFile = $input->getOption('config');
-
-        return $this->configReader->readConfig($configFile);
-    }
-
-    /**
-     * @param InputInterface $input
-     *
      * @return string[] Array of filtered module names
      */
     private function readFilters(InputInterface $input)
@@ -224,5 +189,40 @@ class DependenciesCommand extends Command
         \sort($filters);
 
         return $filters;
+    }
+
+    /**
+     * @param Module[]     $modules
+     * @param SymfonyStyle $io
+     *
+     * @return bool True if everything is valid, false otherwise
+     */
+    private function validateModules(array $modules, SymfonyStyle $io)
+    {
+        $duplicatedModules = $this->findModuleDuplicates($modules);
+        if (!empty($duplicatedModules)) {
+            $io->error('Two or more of your configured modules have the same name');
+            $io->section('Duplicated modules');
+            $io->listing($duplicatedModules);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @throws InvalidConfig
+     * @throws InvalidSchema
+     *
+     * @return Config
+     */
+    private function readConfig(InputInterface $input)
+    {
+        $configFile = $input->getOption('config');
+
+        return $this->configReader->readConfig($configFile);
     }
 }
