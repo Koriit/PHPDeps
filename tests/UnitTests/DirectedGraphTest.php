@@ -56,19 +56,8 @@ class DirectedGraphTest extends PHPUnit_Framework_TestCase
      */
     public function shouldFindGraphCycles(array $neighbourhoods, array $expectedCycles)
     {
-        /** @var Vertex[] $vertices */
-        $vertices = [];
-        foreach (\array_keys($neighbourhoods) as $module) {
-            $vertices[$module] = new Vertex($module);
-        }
+        $graph = $this->createGraphFromNeighbourhoods($neighbourhoods);
 
-        foreach ($neighbourhoods as $module => $neighbourhood) {
-            foreach ($neighbourhood as $neighbour) {
-                $vertices[$module]->addNeighbour($vertices[$neighbour]);
-            }
-        }
-
-        $graph = new DirectedGraph($vertices);
         $cycles = $graph->findAllCycles();
 
         $this->assertEquals($expectedCycles, $cycles);
@@ -142,5 +131,93 @@ class DirectedGraphTest extends PHPUnit_Framework_TestCase
                     ],
               ],
         ];
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider getSearchCases
+     *
+     * @param string[][] $neighbourhoods
+     * @param callable   $searchCallback
+     * @param string     $expectedValue
+     */
+    public function shouldSearchVertices(array $neighbourhoods, callable $searchCallback, $expectedValue)
+    {
+        $graph = $this->createGraphFromNeighbourhoods($neighbourhoods);
+
+        $vertex = $graph->search($searchCallback);
+
+        $this->assertSame($expectedValue, $vertex->getValue());
+    }
+
+    public function getSearchCases()
+    {
+        return [
+              'By value' => [
+                    'neighbourhoods' => [
+                          'Module1' => [],
+                          'Module2' => [],
+                    ],
+                    'searchCallback' => function (Vertex $v) {
+                        return $v->getValue() === 'Module2';
+                    },
+                    'expectedValue'  => 'Module2',
+              ],
+
+              'When more then one match' => [
+                    'neighbourhoods' => [
+                          'Module1' => [],
+                          'Module2' => ['Module1'],
+                          'Module3' => ['Module1'],
+                    ],
+                    'searchCallback' => function (Vertex $v) {
+                        foreach ($v->getNeighbours() as $n) {
+                            if ($n->getValue() === 'Module1') {
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    },
+                    'expectedValue'  => 'Module2',
+              ],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnNullWhenSearchNotFound()
+    {
+        $graph = $this->createGraphFromNeighbourhoods([]);
+
+        $vertex = $graph->search(function (Vertex $v) {
+            return $v->getValue() == 1;
+        });
+
+        $this->assertNull($vertex);
+    }
+
+    /**
+     * @param string[][] $neighbourhoods
+     *
+     * @return DirectedGraph
+     */
+    private function createGraphFromNeighbourhoods(array $neighbourhoods)
+    {
+        /** @var Vertex[] $vertices */
+        $vertices = [];
+        foreach (\array_keys($neighbourhoods) as $module) {
+            $vertices[$module] = new Vertex($module);
+        }
+
+        foreach ($neighbourhoods as $module => $neighbourhood) {
+            foreach ($neighbourhood as $neighbour) {
+                $vertices[$module]->addNeighbour($vertices[$neighbour]);
+            }
+        }
+
+        return new DirectedGraph($vertices);
     }
 }
