@@ -1,4 +1,4 @@
-EventDispatcher
+PHPCircle
 -----
 [![Build Status](https://travis-ci.org/Koriit/PHPCircle.svg?branch=master)](https://travis-ci.org/Koriit/PHPCircle)
 
