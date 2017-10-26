@@ -59,7 +59,7 @@ class DependCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $config = $this->helper->readConfig($input);
-        $filters = $this->readFilters($input);
+        $filters = $this->helper->readFilters($input);
         $moduleName = $input->getArgument('module');
 
         $modules = $this->helper->findModules($config);
@@ -142,25 +142,6 @@ class DependCommand extends Command
         } else {
             $io->text('No dependencies');
         }
-    }
-
-    /**
-     * @param InputInterface $input
-     *
-     * @return string[] Array of filtered module names
-     */
-    private function readFilters(InputInterface $input)
-    {
-        $filters = $input->getOption('filter');
-        if (empty(\trim($filters))) {
-            return [];
-        }
-
-        $filters = \explode(',', $filters);
-        $filters = \array_map('trim', $filters);
-        \sort($filters);
-
-        return $filters;
     }
 
     /**

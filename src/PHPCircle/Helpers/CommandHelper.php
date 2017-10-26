@@ -99,4 +99,23 @@ class CommandHelper
 
         return $modules;
     }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @return string[] Array of filtered module names
+     */
+    public function readFilters(InputInterface $input)
+    {
+        $filters = $input->getOption('filter');
+        if (empty(\trim($filters))) {
+            return [];
+        }
+
+        $filters = \explode(',', $filters);
+        $filters = \array_map('trim', $filters);
+        \sort($filters);
+
+        return $filters;
+    }
 }
