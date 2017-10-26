@@ -10,6 +10,7 @@ use Exception;
 use Koriit\PHPCircle\Application\ApplicationInterface;
 use Koriit\PHPCircle\Application\Exceptions\ApplicationAlreadyRunning;
 use Koriit\PHPCircle\Commands\CheckCommand;
+use Koriit\PHPCircle\Commands\DependCommand;
 use Koriit\PHPCircle\Commands\DependenciesCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -75,6 +76,7 @@ class PHPCircleApplication implements ApplicationInterface
     {
         return [
               CheckCommand::class,
+              DependCommand::class,
               DependenciesCommand::class,
         ];
     }
