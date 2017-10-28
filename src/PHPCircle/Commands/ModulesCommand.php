@@ -5,7 +5,8 @@ namespace Koriit\PHPCircle\Commands;
 use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\ExitCodes;
-use Koriit\PHPCircle\Helpers\CommandHelper;
+use Koriit\PHPCircle\Helpers\InputHelper;
+use Koriit\PHPCircle\Helpers\ModulesHelper;
 use Koriit\PHPCircle\Modules\Module;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,14 +16,18 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ModulesCommand extends Command
 {
-    /** @var CommandHelper */
-    private $helper;
+    /** @var ModulesHelper */
+    private $modulesHelper;
 
-    public function __construct(CommandHelper $helper)
+    /** @var InputHelper */
+    private $inputHelper;
+
+    public function __construct(ModulesHelper $modulesHelper, InputHelper $inputHelper)
     {
         parent::__construct();
 
-        $this->helper = $helper;
+        $this->modulesHelper = $modulesHelper;
+        $this->inputHelper = $inputHelper;
     }
 
     protected function configure()
@@ -46,10 +51,10 @@ class ModulesCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $config = $this->helper->readConfig($input);
+        $config = $this->inputHelper->readConfig($input);
 
-        $modules = $this->helper->findModules($config);
-        if (!$this->helper->validateModules($modules, $io)) {
+        $modules = $this->modulesHelper->findModules($config);
+        if (!$this->modulesHelper->validateModules($modules, $io)) {
             return ExitCodes::UNEXPECTED_ERROR;
         }
 
@@ -62,7 +67,6 @@ class ModulesCommand extends Command
 
         return ExitCodes::OK;
     }
-
 
     /**
      * @param Module[]     $modules

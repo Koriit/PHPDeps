@@ -7,7 +7,8 @@ use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\ExitCodes;
 use Koriit\PHPCircle\Graph\DirectedGraph;
 use Koriit\PHPCircle\Graph\Vertex;
-use Koriit\PHPCircle\Helpers\CommandHelper;
+use Koriit\PHPCircle\Helpers\InputHelper;
+use Koriit\PHPCircle\Helpers\ModulesHelper;
 use Koriit\PHPCircle\Modules\Module;
 use Koriit\PHPCircle\Modules\ModuleReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
@@ -23,15 +24,19 @@ class DependCommand extends Command
     /** @var ModuleReader */
     private $modulesReader;
 
-    /** @var CommandHelper */
-    private $helper;
+    /** @var ModulesHelper */
+    private $modulesHelper;
 
-    public function __construct(CommandHelper $helper, ModuleReader $modulesReader)
+    /** @var InputHelper */
+    private $inputHelper;
+
+    public function __construct(ModulesHelper $modulesHelper, InputHelper $inputHelper, ModuleReader $modulesReader)
     {
         parent::__construct();
 
         $this->modulesReader = $modulesReader;
-        $this->helper = $helper;
+        $this->modulesHelper = $modulesHelper;
+        $this->inputHelper = $inputHelper;
     }
 
     protected function configure()
@@ -52,18 +57,18 @@ class DependCommand extends Command
      * @throws InvalidSchema
      * @throws MalformedFile
      *
-     * @return int
+     * @return int Exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
-        $config = $this->helper->readConfig($input);
-        $filters = $this->helper->readFilters($input);
+        $config = $this->inputHelper->readConfig($input);
+        $filters = $this->inputHelper->readFilters($input);
         $moduleName = $input->getArgument('module');
 
-        $modules = $this->helper->findModules($config);
-        if (!$this->helper->validateModules($modules, $io) || !$this->isModule($modules, $moduleName, $io)) {
+        $modules = $this->modulesHelper->findModules($config);
+        if (!$this->modulesHelper->validateModules($modules, $io) || !$this->checkModule($modules, $moduleName, $io)) {
             return ExitCodes::UNEXPECTED_ERROR;
         }
 
@@ -86,36 +91,19 @@ class DependCommand extends Command
             if (empty($filters)) {
                 $io->writeln('No filters applied.');
             } else {
-                $io->writeln('Displaying modules with following filter: ' . \implode(', ', $filters));
+                $io->writeln('Filters applied: ' . \implode(', ', $filters));
             }
             $io->newLine();
-            $io->writeln('Modules:');
         }
 
-        $vertices = $dependenciesGraph->getVertices();
-        if (!empty($filters)) {
-            $vertices = \array_filter($vertices, function (Vertex $v) use ($filters) {
-                return \in_array($v->getValue()->getName(), $filters);
-            });
-        }
+        $vertices = $this->modulesHelper->filterVerticesByModuleName($dependenciesGraph->getVertices(), $filters);
+        $vertices = $this->filterVerticesByDependencyName($vertices, $moduleName);
 
-        $vertices = \array_filter($vertices, function (Vertex $v) use ($moduleName) {
-            foreach ($v->getNeighbours() as $neighbour) {
-                if ($neighbour->getValue()->getName() == $moduleName) {
-                    return true;
-                }
-            }
-
-            return false;
-        });
-
-        if (!$io->isQuiet()) {
-            $io->writeln(count($vertices) . ' modules depend on "' . $moduleName . '"');
-        }
+        $io->writeln(count($vertices) . ' modules depend on "' . $moduleName . '"');
 
         $i = 1;
         foreach ($vertices as $vertex) {
-            $this->helper->renderModuleDependencies($io, $vertex, $i++);
+            $this->modulesHelper->renderModuleDependencies($io, $vertex, $i++);
         }
     }
 
@@ -126,7 +114,7 @@ class DependCommand extends Command
      *
      * @return bool Whether a module with provided name exists in the array
      */
-    private function isModule(array $modules, $moduleName, SymfonyStyle $io)
+    private function checkModule(array $modules, $moduleName, SymfonyStyle $io)
     {
         foreach ($modules as $module) {
             if ($module->getName() == $moduleName) {
@@ -137,5 +125,26 @@ class DependCommand extends Command
         $io->error('Module "' . $moduleName . '" is not a properly configured module');
 
         return false;
+    }
+
+    /**
+     * @param Vertex[] $vertices       Module vertices to filter
+     * @param string   $dependencyName Name of required dependency
+     *
+     * @return Vertex[] Filtered vertices array
+     */
+    private function filterVerticesByDependencyName(array $vertices, $dependencyName)
+    {
+        $filterExpression = function (Vertex $v) use ($dependencyName) {
+            foreach ($v->getNeighbours() as $neighbour) {
+                if ($neighbour->getValue()->getName() == $dependencyName) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
+        return \array_filter($vertices, $filterExpression);
     }
 }

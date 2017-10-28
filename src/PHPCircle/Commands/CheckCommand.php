@@ -6,7 +6,8 @@ use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\Console\GraphWriter;
 use Koriit\PHPCircle\ExitCodes;
-use Koriit\PHPCircle\Helpers\CommandHelper;
+use Koriit\PHPCircle\Helpers\InputHelper;
+use Koriit\PHPCircle\Helpers\ModulesHelper;
 use Koriit\PHPCircle\Modules\Module;
 use Koriit\PHPCircle\Modules\ModuleReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
@@ -24,16 +25,20 @@ class CheckCommand extends Command
     /** @var GraphWriter */
     private $graphWriter;
 
-    /** @var CommandHelper */
-    private $helper;
+    /** @var ModulesHelper */
+    private $modulesHelper;
 
-    public function __construct(CommandHelper $helper, ModuleReader $modulesReader, GraphWriter $graphWriter)
+    /** @var InputHelper */
+    private $inputHelper;
+
+    public function __construct(ModulesHelper $modulesHelper, InputHelper $inputHelper, ModuleReader $modulesReader, GraphWriter $graphWriter)
     {
         parent::__construct();
 
         $this->modulesReader = $modulesReader;
         $this->graphWriter = $graphWriter;
-        $this->helper = $helper;
+        $this->modulesHelper = $modulesHelper;
+        $this->inputHelper = $inputHelper;
     }
 
     protected function configure()
@@ -53,17 +58,17 @@ class CheckCommand extends Command
      * @throws InvalidSchema
      * @throws MalformedFile
      *
-     * @return int
+     * @return int Exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
-        $config = $this->helper->readConfig($input);
+        $config = $this->inputHelper->readConfig($input);
         $drawGraphs = $output->isVerbose() || $input->getOption('graphs');
 
-        $modules = $this->helper->findModules($config);
-        if (!$this->helper->validateModules($modules, $io)) {
+        $modules = $this->modulesHelper->findModules($config);
+        if (!$this->modulesHelper->validateModules($modules, $io)) {
             return ExitCodes::UNEXPECTED_ERROR;
         }
 

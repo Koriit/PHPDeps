@@ -6,9 +6,8 @@ use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\ExitCodes;
 use Koriit\PHPCircle\Graph\DirectedGraph;
-use Koriit\PHPCircle\Graph\Vertex;
-use Koriit\PHPCircle\Helpers\CommandHelper;
-use Koriit\PHPCircle\Modules\Module;
+use Koriit\PHPCircle\Helpers\InputHelper;
+use Koriit\PHPCircle\Helpers\ModulesHelper;
 use Koriit\PHPCircle\Modules\ModuleReader;
 use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use Symfony\Component\Console\Command\Command;
@@ -22,15 +21,19 @@ class DependenciesCommand extends Command
     /** @var ModuleReader */
     private $modulesReader;
 
-    /** @var CommandHelper */
-    private $helper;
+    /** @var ModulesHelper */
+    private $modulesHelper;
 
-    public function __construct(CommandHelper $helper, ModuleReader $modulesReader)
+    /** @var InputHelper */
+    private $inputHelper;
+
+    public function __construct(ModulesHelper $modulesHelper, InputHelper $inputHelper, ModuleReader $modulesReader)
     {
         parent::__construct();
 
         $this->modulesReader = $modulesReader;
-        $this->helper = $helper;
+        $this->modulesHelper = $modulesHelper;
+        $this->inputHelper = $inputHelper;
     }
 
     protected function configure()
@@ -56,11 +59,11 @@ class DependenciesCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $config = $this->helper->readConfig($input);
-        $filters = $this->helper->readFilters($input);
+        $config = $this->inputHelper->readConfig($input);
+        $filters = $this->inputHelper->readFilters($input);
 
-        $modules = $this->helper->findModules($config);
-        if (!$this->helper->validateModules($modules, $io)) {
+        $modules = $this->modulesHelper->findModules($config);
+        if (!$this->modulesHelper->validateModules($modules, $io)) {
             return ExitCodes::UNEXPECTED_ERROR;
         }
 
@@ -82,22 +85,16 @@ class DependenciesCommand extends Command
             if (empty($filters)) {
                 $io->writeln('No filters applied.');
             } else {
-                $io->writeln('Displaying modules with following filter: ' . \implode(', ', $filters));
+                $io->writeln('Filters applied: ' . \implode(', ', $filters));
             }
             $io->newLine();
-            $io->writeln('Modules:');
         }
 
-        $vertices = $dependenciesGraph->getVertices();
-        if (!empty($filters)) {
-            $vertices = \array_filter($vertices, function (Vertex $v) use ($filters) {
-                return \in_array($v->getValue()->getName(), $filters);
-            });
-        }
+        $vertices = $this->modulesHelper->filterVerticesByModuleName($dependenciesGraph->getVertices(), $filters);
 
         $i = 1;
         foreach ($vertices as $vertex) {
-            $this->helper->renderModuleDependencies($io, $vertex, $i++);
+            $this->modulesHelper->renderModuleDependencies($io, $vertex, $i++);
         }
     }
 }

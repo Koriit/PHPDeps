@@ -7,24 +7,12 @@
 namespace Koriit\PHPCircle\Helpers;
 
 use Koriit\PHPCircle\Config\Config;
-use Koriit\PHPCircle\Config\ConfigReader;
-use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
-use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\Graph\Vertex;
 use Koriit\PHPCircle\Modules\Module;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class CommandHelper
+class ModulesHelper
 {
-    /** @var ConfigReader */
-    private $configReader;
-
-    public function __construct(ConfigReader $configReader)
-    {
-        $this->configReader = $configReader;
-    }
-
     /**
      * @param Module[]     $modules
      * @param SymfonyStyle $io
@@ -44,22 +32,6 @@ class CommandHelper
 
         return true;
     }
-
-    /**
-     * @param InputInterface $input
-     *
-     * @throws InvalidConfig
-     * @throws InvalidSchema
-     *
-     * @return Config
-     */
-    public function readConfig(InputInterface $input)
-    {
-        $configFile = $input->getOption('config');
-
-        return $this->configReader->readConfig($configFile);
-    }
-
 
     /**
      * @param Module[] $modules
@@ -102,25 +74,6 @@ class CommandHelper
     }
 
     /**
-     * @param InputInterface $input
-     *
-     * @return string[] Array of filtered module names
-     */
-    public function readFilters(InputInterface $input)
-    {
-        $filters = $input->getOption('filter');
-        if (empty(\trim($filters))) {
-            return [];
-        }
-
-        $filters = \explode(',', $filters);
-        $filters = \array_map('trim', $filters);
-        \sort($filters);
-
-        return $filters;
-    }
-
-    /**
      * @param SymfonyStyle $io
      * @param Vertex       $vertex Module's vertex
      * @param int          $index  List index
@@ -143,5 +96,24 @@ class CommandHelper
         } else {
             $io->text('No dependencies');
         }
+    }
+
+    /**
+     * @param Vertex[] $vertices Module vertices to filter
+     * @param string[] $filters  Allowed Module names
+     *
+     * @return Vertex[] Filtered vertices array
+     */
+    public function filterVerticesByModuleName(array $vertices, array $filters)
+    {
+        if (!empty($filters)) {
+            $filterExpression = function (Vertex $v) use ($filters) {
+                return \in_array($v->getValue()->getName(), $filters);
+            };
+
+            return \array_filter($vertices, $filterExpression);
+        }
+
+        return $vertices;
     }
 }
