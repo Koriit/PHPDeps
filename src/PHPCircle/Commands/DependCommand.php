@@ -78,11 +78,10 @@ class DependCommand extends Command
         return ExitCodes::OK;
     }
 
-
     /**
      * @param DirectedGraph $dependenciesGraph
      * @param SymfonyStyle  $io
-     * @param string[]      $filters Filtered module names
+     * @param string[]      $filters           Filtered module names
      * @param string        $moduleName
      */
     private function displayDependantModules(DirectedGraph $dependenciesGraph, SymfonyStyle $io, array $filters, $moduleName)
@@ -99,7 +98,7 @@ class DependCommand extends Command
         $vertices = $this->modulesHelper->filterVerticesByModuleName($dependenciesGraph->getVertices(), $filters);
         $vertices = $this->filterVerticesByDependencyName($vertices, $moduleName);
 
-        $io->writeln(count($vertices) . ' modules depend on "' . $moduleName . '"');
+        $io->writeln(\count($vertices) . ' modules depend on "' . $moduleName . '"');
 
         $i = 1;
         foreach ($vertices as $vertex) {

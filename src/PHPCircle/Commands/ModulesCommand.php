@@ -60,7 +60,6 @@ class ModulesCommand extends Command
 
         if (empty($modules)) {
             $io->warning('There are no configured modules!');
-
         } else {
             $this->displayModules($modules, $io);
         }

@@ -73,11 +73,10 @@ class DependenciesCommand extends Command
         return ExitCodes::OK;
     }
 
-
     /**
      * @param DirectedGraph $dependenciesGraph
      * @param SymfonyStyle  $io
-     * @param string[]      $filters Filtered module names
+     * @param string[]      $filters           Filtered module names
      */
     private function displayModules(DirectedGraph $dependenciesGraph, SymfonyStyle $io, array $filters)
     {
