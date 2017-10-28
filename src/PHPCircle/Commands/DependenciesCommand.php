@@ -97,32 +97,7 @@ class DependenciesCommand extends Command
 
         $i = 1;
         foreach ($vertices as $vertex) {
-            $this->renderModule($io, $vertex, $i++);
-        }
-    }
-
-    /**
-     * @param SymfonyStyle $io
-     * @param Vertex       $vertex Module's vertex
-     * @param int          $index  List index
-     */
-    private function renderModule(SymfonyStyle $io, Vertex $vertex, $index)
-    {
-        /** @var Module $module */
-        $module = $vertex->getValue();
-        $io->section($index . '. ' . $module->getName() . ' [<fg=magenta>' . $module->getNamespace() . '</>]');
-
-        $dependencies = [];
-        foreach ($vertex->getNeighbours() as $neighbour) {
-            /** @var Module $dependency */
-            $dependency = $neighbour->getValue();
-            $dependencies[] = $dependency->getName() . ' [<fg=magenta>' . $dependency->getNamespace() . '</>]';
-        }
-
-        if (!empty($dependencies)) {
-            $io->listing($dependencies);
-        } else {
-            $io->text('No dependencies');
+            $this->helper->renderModuleDependencies($io, $vertex, $i++);
         }
     }
 }

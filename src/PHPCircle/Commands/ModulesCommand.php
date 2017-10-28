@@ -5,12 +5,8 @@ namespace Koriit\PHPCircle\Commands;
 use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
 use Koriit\PHPCircle\ExitCodes;
-use Koriit\PHPCircle\Graph\DirectedGraph;
-use Koriit\PHPCircle\Graph\Vertex;
 use Koriit\PHPCircle\Helpers\CommandHelper;
 use Koriit\PHPCircle\Modules\Module;
-use Koriit\PHPCircle\Modules\ModuleReader;
-use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,17 +15,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ModulesCommand extends Command
 {
-    /** @var ModuleReader */
-    private $modulesReader;
-
     /** @var CommandHelper */
     private $helper;
 
-    public function __construct(CommandHelper $helper, ModuleReader $modulesReader)
+    public function __construct(CommandHelper $helper)
     {
         parent::__construct();
 
-        $this->modulesReader = $modulesReader;
         $this->helper = $helper;
     }
 
@@ -47,9 +39,8 @@ class ModulesCommand extends Command
      *
      * @throws InvalidConfig
      * @throws InvalidSchema
-     * @throws MalformedFile
      *
-     * @return int
+     * @return int Exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -10,6 +10,7 @@ use Koriit\PHPCircle\Config\Config;
 use Koriit\PHPCircle\Config\ConfigReader;
 use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
 use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
+use Koriit\PHPCircle\Graph\Vertex;
 use Koriit\PHPCircle\Modules\Module;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -117,5 +118,30 @@ class CommandHelper
         \sort($filters);
 
         return $filters;
+    }
+
+    /**
+     * @param SymfonyStyle $io
+     * @param Vertex       $vertex Module's vertex
+     * @param int          $index  List index
+     */
+    public function renderModuleDependencies(SymfonyStyle $io, Vertex $vertex, $index)
+    {
+        /** @var Module $module */
+        $module = $vertex->getValue();
+        $io->section($index . '. ' . $module->getName() . ' [<fg=magenta>' . $module->getNamespace() . '</>]');
+
+        $dependencies = [];
+        foreach ($vertex->getNeighbours() as $neighbour) {
+            /** @var Module $dependency */
+            $dependency = $neighbour->getValue();
+            $dependencies[] = $dependency->getName() . ' [<fg=magenta>' . $dependency->getNamespace() . '</>]';
+        }
+
+        if (!empty($dependencies)) {
+            $io->listing($dependencies);
+        } else {
+            $io->text('No dependencies');
+        }
     }
 }
