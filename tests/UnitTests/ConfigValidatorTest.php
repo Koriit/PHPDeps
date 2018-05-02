@@ -4,13 +4,13 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle\Test\UnitTests;
+namespace Koriit\PHPDeps\Test\UnitTests;
 
-use Koriit\PHPCircle\Config\Config;
-use Koriit\PHPCircle\Config\ConfigReader;
-use Koriit\PHPCircle\Config\ConfigValidator;
-use Koriit\PHPCircle\Config\Exceptions\InvalidConfig;
-use Koriit\PHPCircle\Config\Exceptions\InvalidSchema;
+use Koriit\PHPDeps\Config\Config;
+use Koriit\PHPDeps\Config\ConfigReader;
+use Koriit\PHPDeps\Config\ConfigValidator;
+use Koriit\PHPDeps\Config\Exceptions\InvalidConfig;
+use Koriit\PHPDeps\Config\Exceptions\InvalidSchema;
 use PHPUnit_Framework_TestCase;
 
 class ConfigValidatorTest extends PHPUnit_Framework_TestCase

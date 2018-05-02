@@ -4,9 +4,9 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle\Test\UnitTests;
+namespace Koriit\PHPDeps\Test\UnitTests;
 
-use Koriit\PHPCircle\Graph\Vertex;
+use Koriit\PHPDeps\Graph\Vertex;
 use PHPUnit_Framework_TestCase;
 
 class VertexTest extends PHPUnit_Framework_TestCase

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PHPCircle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../src/PHPCircle/phpcircle.xsd">
+<PHPDeps xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../src/PHPDeps/phpdeps.xsd">
     <Modules>
         <Module>
             <SOMEINVALIDFIELD></SOMEINVALIDFIELD>
         </Module>
     </Modules>
-</PHPCircle>
+</PHPDeps>

@@ -4,10 +4,10 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle\Test\UnitTests;
+namespace Koriit\PHPDeps\Test\UnitTests;
 
-use Koriit\PHPCircle\Graph\DirectedGraph;
-use Koriit\PHPCircle\Graph\Vertex;
+use Koriit\PHPDeps\Graph\DirectedGraph;
+use Koriit\PHPDeps\Graph\Vertex;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 

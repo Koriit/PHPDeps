@@ -4,9 +4,9 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle\Test\UnitTests;
+namespace Koriit\PHPDeps\Test\UnitTests;
 
-use Koriit\PHPCircle\Console\GraphWriter;
+use Koriit\PHPDeps\Console\GraphWriter;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
 

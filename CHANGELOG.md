@@ -6,4 +6,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/Koriit/PHPCircle/compare/fa81c9bfb4938a013b88b80a1a43cb850bb9978b..HEAD
+[Unreleased]: https://github.com/Koriit/PHPDeps/compare/fa81c9bfb4938a013b88b80a1a43cb850bb9978b..HEAD

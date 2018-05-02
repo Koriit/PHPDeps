@@ -4,10 +4,10 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle\Test\UnitTests;
+namespace Koriit\PHPDeps\Test\UnitTests;
 
-use Koriit\PHPCircle\Modules\Module;
-use Koriit\PHPCircle\Modules\ModuleDetector;
+use Koriit\PHPDeps\Modules\Module;
+use Koriit\PHPDeps\Modules\ModuleDetector;
 use PHPUnit_Framework_TestCase;
 
 class ModuleDetectorTest extends PHPUnit_Framework_TestCase

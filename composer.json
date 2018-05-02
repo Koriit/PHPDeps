@@ -1,5 +1,5 @@
 {
-  "name": "koriit/phpcircle",
+  "name": "koriit/phpdeps",
   "type": "library",
   "description": "Library for finding circular dependencies between modules",
   "keywords": [
@@ -7,7 +7,7 @@
     "dependencies",
     "circular-dependencies"
   ],
-  "homepage": "https://github.com/Koriit/PHPCircle",
+  "homepage": "https://github.com/Koriit/PHPDeps",
   "license": "MIT",
   "authors": [
     {
@@ -16,7 +16,7 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/Koriit/PHPCircle/issues"
+    "issues": "https://github.com/Koriit/PHPDeps/issues"
   },
   "require": {
     "php": "^5.6 || ^7.0 <7.3",
@@ -29,12 +29,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Koriit\\PHPCircle\\": "src/PHPCircle/"
+      "Koriit\\PHPDeps\\": "src/PHPDeps/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Koriit\\PHPCircle\\Test\\": "tests/"
+      "Koriit\\PHPDeps\\Test\\": "tests/"
     }
   },
   "scripts": {
@@ -46,6 +46,6 @@
     "sort-packages": true
   },
   "bin": [
-    "phpcircle"
+    "phpdeps"
   ]
 }

@@ -4,10 +4,10 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle\Test\UnitTests;
+namespace Koriit\PHPDeps\Test\UnitTests;
 
-use Koriit\PHPCircle\Tokenizer\DependenciesReader;
-use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
+use Koriit\PHPDeps\Tokenizer\DependenciesReader;
+use Koriit\PHPDeps\Tokenizer\Exceptions\MalformedFile;
 use PHPUnit_Framework_TestCase;
 
 class DependenciesReaderTest extends PHPUnit_Framework_TestCase

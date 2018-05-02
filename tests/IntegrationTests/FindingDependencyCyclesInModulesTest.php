@@ -4,14 +4,14 @@
  * @license   MIT License, see license file distributed with this source code
  */
 
-namespace Koriit\PHPCircle\Test\IntegrationTests;
+namespace Koriit\PHPDeps\Test\IntegrationTests;
 
-use Koriit\PHPCircle\Config\ConfigReader;
-use Koriit\PHPCircle\Config\ConfigValidator;
-use Koriit\PHPCircle\Modules\Module;
-use Koriit\PHPCircle\Modules\ModuleReader;
-use Koriit\PHPCircle\Tokenizer\DependenciesReader;
-use Koriit\PHPCircle\Tokenizer\Exceptions\MalformedFile;
+use Koriit\PHPDeps\Config\ConfigReader;
+use Koriit\PHPDeps\Config\ConfigValidator;
+use Koriit\PHPDeps\Modules\Module;
+use Koriit\PHPDeps\Modules\ModuleReader;
+use Koriit\PHPDeps\Tokenizer\DependenciesReader;
+use Koriit\PHPDeps\Tokenizer\Exceptions\MalformedFile;
 use PHPUnit_Framework_TestCase;
 
 class FindingDependencyCyclesInModulesTest extends PHPUnit_Framework_TestCase
@@ -37,8 +37,8 @@ class FindingDependencyCyclesInModulesTest extends PHPUnit_Framework_TestCase
      * @param array  $expectedCycles
      *
      * @throws MalformedFile
-     * @throws \Koriit\PHPCircle\Config\Exceptions\InvalidConfig
-     * @throws \Koriit\PHPCircle\Config\Exceptions\InvalidSchema
+     * @throws \Koriit\PHPDeps\Config\Exceptions\InvalidConfig
+     * @throws \Koriit\PHPDeps\Config\Exceptions\InvalidSchema
      */
     public function shouldFindDependencyCycles($configFile, array $expectedCycles)
     {
@@ -65,19 +65,19 @@ class FindingDependencyCyclesInModulesTest extends PHPUnit_Framework_TestCase
     {
         return [
               'Acyclic Modules' => [
-                    __DIR__ . '/../Cases/Integration/AcyclicModules/phpcircle.xml',
+                    __DIR__ . '/../Cases/Integration/AcyclicModules/phpdeps.xml',
                     [],
               ],
 
               'Three Cyclic Modules' => [
-                    __DIR__ . '/../Cases/Integration/ThreeCyclicModules/phpcircle.xml',
+                    __DIR__ . '/../Cases/Integration/ThreeCyclicModules/phpdeps.xml',
                     [
                           ['Module1', 'Module2', 'Module3'],
                     ],
               ],
 
               'Two Disconnected Cycles' => [
-                    __DIR__ . '/../Cases/Integration/TwoDisconnectedCycles/phpcircle.xml',
+                    __DIR__ . '/../Cases/Integration/TwoDisconnectedCycles/phpdeps.xml',
                     [
                           ['Module1', 'Module2'],
                           ['Module3', 'Module4'],

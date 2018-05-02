@@ -1,0 +1,35 @@
+#!/usr/bin/env php
+<?php
+/**
+ * @copyright 2017 Aleksander Stelmaczonek <al.stelmaczonek@gmail.com>
+ * @license   MIT License, see license file distributed with this source code
+ */
+
+use Koriit\PHPDeps\PHPDepsApplication;
+use Koriit\PHPDeps\PHPDepsDependencies;
+use Koriit\PHPDeps\Application\EntryPoint;
+
+foreach ([__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        define('PHPDEPS_COMPOSER_INSTALL', $file);
+
+        break;
+    }
+}
+
+unset($file);
+
+if (!defined('PHPDEPS_COMPOSER_INSTALL')) {
+    fwrite(STDERR,
+           'You need to set up the project dependencies using Composer:' . PHP_EOL . PHP_EOL .
+           '    composer install' . PHP_EOL . PHP_EOL .
+           'You can learn all about Composer on https://getcomposer.org/.' . PHP_EOL
+    );
+
+    die(1);
+}
+
+require PHPDEPS_COMPOSER_INSTALL;
+
+$entryPoint = new EntryPoint();
+$entryPoint->enter(PHPDepsApplication::class, new PHPDepsDependencies());
