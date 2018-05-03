@@ -8,6 +8,7 @@ namespace Koriit\PHPDeps\Modules;
 
 use Koriit\PHPDeps\Graph\DirectedGraph;
 use Koriit\PHPDeps\Graph\Vertex;
+use Koriit\PHPDeps\Modules\Exceptions\ModuleNotFound;
 use Koriit\PHPDeps\Tokenizer\DependenciesReader;
 use Koriit\PHPDeps\Tokenizer\Exceptions\MalformedFile;
 use RecursiveDirectoryIterator;
@@ -28,6 +29,7 @@ class ModuleReader
      * @param Module[] $modules
      *
      * @throws MalformedFile
+     * @throws ModuleNotFound
      *
      * @return DirectedGraph Graph describing dependencies between modules
      */
@@ -57,6 +59,7 @@ class ModuleReader
      * @param string $modulePath Path to module, either file or directory
      *
      * @throws MalformedFile
+     * @throws ModuleNotFound
      *
      * @return string[] List of module's dependencies
      */
@@ -79,6 +82,7 @@ class ModuleReader
      * @param string $modulePath
      *
      * @return string[] Paths to PHP files in the module
+     * @throws ModuleNotFound
      */
     private function findPHPFiles($modulePath)
     {
@@ -95,7 +99,7 @@ class ModuleReader
         } elseif (\is_file($modulePath)) {
             $files[] = $modulePath;
         } else {
-            throw new RuntimeException('Module cannot be read or does not exist: ' . $modulePath);
+            throw new ModuleNotFound($modulePath);
         }
 
         return $files;

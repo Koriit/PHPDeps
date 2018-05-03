@@ -39,7 +39,7 @@ class ModuleDetector
 
         foreach (\glob($this->path . '/*', GLOB_ONLYDIR) as $modulePath) {
             $name = \basename($modulePath);
-            $modules[] = new Module($name, $this->getNamespace() . '\\' . $name, $modulePath);
+            $modules[] = new Module($name, $this->namespace . '\\' . $name, $modulePath);
         }
 
         return $modules;

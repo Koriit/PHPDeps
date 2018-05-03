@@ -6,6 +6,7 @@
 
 namespace Koriit\PHPDeps\Test\UnitTests;
 
+use Koriit\PHPDeps\Modules\Exceptions\ModuleNotFound;
 use Koriit\PHPDeps\Modules\Module;
 use Koriit\PHPDeps\Modules\ModuleReader;
 use Koriit\PHPDeps\Tokenizer\DependenciesReader;
@@ -26,6 +27,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
      * @test
      *
      * @throws MalformedFile
+     * @throws ModuleNotFound
      */
     public function shouldReadDirModuleDependencies()
     {
@@ -48,6 +50,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
      * @test
      *
      * @throws MalformedFile
+     * @throws ModuleNotFound
      */
     public function shouldReadFileModuleDependencies()
     {
@@ -65,6 +68,18 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     */
+    public function shouldThrowIfModuleNotFound()
+    {
+        $this->setExpectedException(ModuleNotFound::class);
+
+        $module = 'ModuleNotExists';
+
+        $this->reader->findModuleDependencies($module);
+    }
+
+    /**
+     * @test
      *
      * @dataProvider getGraphCases
      *
@@ -72,6 +87,7 @@ class ModulesReaderTest extends PHPUnit_Framework_TestCase
      * @param array  $expectations
      *
      * @throws MalformedFile
+     * @throws ModuleNotFound
      */
     public function shouldGenerateModuleDependenciesGraph($case, array $expectations)
     {
