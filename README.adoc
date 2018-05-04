@@ -13,7 +13,10 @@ image:https://poser.pugx.org/koriit/phpdeps/license[License, link="https://packa
 
 == About
 
-PHPDeps is a simple tool to detect circular dependencies in your modules, whatever you consider as a module.
+PHPDeps is a simple tool to detect circular dependencies in your modules, whatever you consider as a module or package.
+
+Module is an organized unit of code, which is supposed to be treated as single entity. By grouping classes and functions
+into modules we can reason about the design at a higher level of abstraction.
 
 == Install
 
@@ -25,6 +28,17 @@ composer require --dev koriit/phpdeps
 ----
 
 Please, note that PHPDeps is used during the development. It's not a part of your application, hence `--dev`.
+
+== Why care?
+
+This is a general programming problem. If this subject is new to you, or you just need a refresher here are some quick references:
+
+. http://lattix.com/blog/2017/07/26/why-cyclic-dependencies-are-bad[Why Cyclic Dependencies are Bad]
+. http://lorifpeterson.com/?p=24[What is circular dependency and why is it bad?]
+. https://en.wikipedia.org/wiki/Circular_dependency[Circular dependency]
+. https://en.wikipedia.org/wiki/Acyclic_dependencies_principle[Acyclic dependencies principle]
+. http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod[The Principles of OOD]
+  (_The Acyclic Dependencies Principle_ part; in the end, most of the writers refer to this piece of literature)
 
 == Approach
 
