@@ -3,33 +3,91 @@
     <xs:element name="PHPDeps" type="PHPDepsType"/>
 
     <xs:complexType name="ModuleType">
+        <xs:annotation>
+            <xs:documentation>
+                Defines and describes a single module
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element type="xs:string" name="Name"/>
-            <xs:element type="xs:string" name="Namespace"/>
-            <xs:element type="xs:string" name="Path"/>
+            <xs:element type="xs:string" name="Name">
+                <xs:annotation>
+                    <xs:documentation>
+                        Module name, used for display purposes.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="Namespace">
+                <xs:annotation>
+                    <xs:documentation>
+                        Namespace prefix, to check whether any other module depends on it.
+                        If module is a file then this needs to be fully qualified name of that module.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="Path">
+                <xs:annotation>
+                    <xs:documentation>
+                        Module path allows PHPDeps to find and analyze your module, this can be either filepath or
+                        dirpath.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="ModulesType">
+        <xs:annotation>
+            <xs:documentation>
+                Grouping tag for all kinds of module definitions.
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element type="ModuleType" name="Module" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="ModuleDetectorType">
+        <xs:annotation>
+            <xs:documentation>
+                Defines and describes a single basic module detector.
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element type="xs:string" name="Namespace"/>
-            <xs:element type="xs:string" name="Path"/>
+            <xs:element type="xs:string" name="Namespace">
+                <xs:annotation>
+                    <xs:documentation>
+                        Namespace prefix, directory name of found modules are appended to this to create actual
+                        module namespaces.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="Path">
+                <xs:annotation>
+                    <xs:documentation>
+                        Directory where modules are to be searched for.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="DetectorsType">
+        <xs:annotation>
+            <xs:documentation>
+                Grouping tag for all kinds of detector definitions.
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element type="ModuleDetectorType" name="ModuleDetector" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="PHPDepsType">
+        <xs:annotation>
+            <xs:documentation>
+                Configuration root element.
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element type="ModulesType" name="Modules" minOccurs="0"/>
             <xs:element type="DetectorsType" name="Detectors" minOccurs="0"/>

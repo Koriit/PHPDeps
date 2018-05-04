@@ -10,7 +10,6 @@ abstract class ExitCodes
 {
     const OK = 0;
     const UNEXPECTED_ERROR = 1;
-    const SHELL_MISUSE = 2;
     const CIRCULAR_DEPENDENCIES_EXIST = 3;
     const STATUS_OUT_OF_RANGE = 255;
 }

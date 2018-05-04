@@ -1,0 +1,222 @@
+= PHPDeps
+:toc: right
+
+image:https://travis-ci.org/Koriit/PHPDeps.svg?branch=master[Build Status, link="https://travis-ci.org/Koriit/PHPDeps"]
+
+image:https://coveralls.io/repos/github/Koriit/PHPDeps/badge.svg?branch=master[Coverage Status, link="https://coveralls.io/github/Koriit/PHPDeps?branch=master"]
+image:https://scrutinizer-ci.com/g/Koriit/PHPDeps/badges/quality-score.png?b=master[Scrutinizer Code Quality, link="https://scrutinizer-ci.com/g/Koriit/PHPDeps/?branch=master"]
+image:https://styleci.io/repos/105358876/shield?branch=master[StyleCI, link="https://styleci.io/repos/105358876"]
+image:https://insight.sensiolabs.com/projects/d0be02a7-7d54-4d44-9b45-cda5abdf44fe/mini.png[SensioLabsInsight, link="https://insight.sensiolabs.com/projects/d0be02a7-7d54-4d44-9b45-cda5abdf44fe"]
+
+image:https://poser.pugx.org/koriit/phpdeps/v/stable[Latest Stable Version, link="https://packagist.org/packages/koriit/phpdeps"]
+image:https://poser.pugx.org/koriit/phpdeps/license[License, link="https://packagist.org/packages/koriit/phpdeps"]
+
+== About
+
+PHPDeps is a simple tool to detect circular dependencies in your modules, whatever you consider as a module.
+
+== Install
+
+PHPDeps is available via composer:
+
+[source,shell]
+----
+composer require --dev koriit/phpdeps
+----
+
+Please, note that PHPDeps is used during the development. It's not a part of your application, hence `--dev`.
+
+== Approach
+
+[NOTE,caption=TL;DR]
+====
+If you are using https://www.php-fig.org/psr/psr-4[PSR-4] then you are fine.
+====
+
+PHPDeps detects module usage by reading `use` section of your PHP files.
+This means that *PHPDeps requires namespaces to be present*.
+
+PHPDeps assumes that all classes and functions belonging to a single module have the same namespace prefix
+in their fully qualified name.
+
+For example, if we tell PHPDeps that *SomeModule* has namespace of `ACME\Lib\Modules\SomeModule` and PHPDeps
+analyzes a following file which belongs to *OtherModule*:
+[source,php]
+----
+<?php
+namespace ACME\Lib\Modules\OtherModule;
+
+use ACME\Lib\Modules\SomeModule\Exceptions\ObjectNotFound;
+// ...
+----
+
+Then PHPDeps notices that *OtherModule* depends on *SomeModule*.
+
+Once all modules are analyzed, PHPDeps creates a dependency graph and looks for any cycles in it.
+
+== Basic usage
+
+If you are all configured and set then just execute:
+[source,shell]
+----
+vendor/bin/phpdeps
+----
+
+If your configuration file is not named `phpdeps.xml` then you can pass it as `--config` option:
+[source,shell]
+----
+vendor/bin/phpdeps --config=myPHPDepsConfig.xml
+----
+
+It's suggested to add `phpdeps` call to scripts section in your `composer.json`:
+[source,json]
+----
+  "scripts": {
+    "dependencies": "phpdeps"
+  }
+----
+
+You can also run it alongside your tests:
+[source,json]
+----
+  "scripts": {
+    "test": ["phpunit", "phpdeps"]
+  }
+----
+
+== Example
+
+Let's consider a simplified structure of PHPDeps itself:
+----
+/src/PHPDeps
+|-- ExtCodes.php
+|-- PHPDepsApplication.php
+|-- /Commands/
+|-- /Config/
+|-- /Modules/
+|-- /Helpers/
+----
+
+First, you need to prepare a configuration file that will allow PHPDeps to find your modules:
+[source,xml,title="phpdeps.xml"]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<PHPDeps xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/koriit/phpdeps/phpdeps.xsd">
+
+    <Modules> <!--1-->
+        <Module>
+            <Name>PHPDepsApplication</Name> <!--2-->
+            <Namespace>Koriit\PHPDeps\PHPDepsApplication</Namespace> <!--3-->
+            <Path>./src/PHPDeps/PHPDepsApplication.php</Path> <!--4-->
+        </Module>
+    </Modules>
+    
+    <Detectors> <!--5-->
+        <ModuleDetector>
+            <Namespace>Koriit\PHPDeps</Namespace> <!--6-->
+            <Path>./src/PHPDeps</Path> <!--7-->
+        </ModuleDetector>
+    </Detectors>
+    
+</PHPDeps>
+----
+<1> *First option* is to directly define your modules.
+<2> Each module needs a name, but currently this is only used for displaying purposes.
+<3> Each module also needs a namespace prefix, this is used to check whether any other module depends on it.
+    If module is a file then this needs to be fully qualified name of that module.
+<4> Module path allows PHPDeps to find and analyze your module, this can be either filepath or dirpath.
+<5> *Second option* is to define a module detector, right now PHPDeps supports detection of only dir based modules.
+<6> Namespace prefix, directory name of found modules are appended to this to create actual module namespaces.
+<7> Directory where modules are to be searched for.
+
+Once you have a configuration ready, you can execute:
+[source,shell]
+----
+vendor/bin/phpdeps
+----
+
+If everything is all right you get nice OK message:
+----
+[OK] There are no circular dependencies in your modules!
+----
+
+If something is amiss, you get:
+----
+[WARNING] There are circular dependencies in your modules!
+
+In total there are 4 dependency cycles in your modules.
+
+1. Commands -> Modules -> Commands
+----------------------------------
+
+2. Commands -> Config -> Modules -> Commands
+--------------------------------------------
+
+3. Commands -> Helpers -> Modules -> Commands
+---------------------------------------------
+
+4. Commands -> Helpers -> Config -> Modules -> Commands
+-------------------------------------------------------
+----
+Please, note that this example was generated by adding just one dependency to *Commands* module in *Modules* module.
+
+At the moment PHPDeps does not provide any additional help in resolving the circular dependencies problem.
+
+== Exit codes
+
+[options="header",cols="^,30%,60%"]
+|===================================================================================================================
+|   Code  | Name                          | Description
+
+|    0    | OK                            | Application finished successfully and no issues detected
+|    1    | UNEXPECTED_ERROR              | Application was aborted because of an error
+|   *3*   | *CIRCULAR_DEPENDENCIES_EXIST* | Application finished successfully but dependency cycle has been detected
+|   255   | STATUS_OUT_OF_RANGE           | Returned status code was out of range
+|===================================================================================================================
+
+== Config
+
+Configuration is a simple XML file. Provided XSD allows for code completion and easy validation.
+Currently, configuration uses simple format consisting of only XML tags and no attributes
+
+* *<PHPDeps>* - Configuration root element.
+** *<Modules>* - Grouping tag for all kinds of module definitions.
+*** *<Module>* - Defines and describes a single module.
+**** *<Name>* - Module name, used for display purposes.
+**** *<Namespace>* - Namespace prefix, to check whether any other module depends on it.
+                     If module is a file then this needs to be fully qualified name of that module.
+**** *<Path>* - Module path allows PHPDeps to find and analyze your module, this can be either filepath or dirpath.
+** *<Detectors>* - Grouping tag for all kinds of detector definitions.
+*** *<ModuleDetector>* - Defines and describes a single basic module detector.
+**** *<Namespace>* - Namespace prefix, directory name of found modules are appended to this to create actual module namespaces.
+**** *<Path>* - Directory where modules are to be searched for.
+
+== Config example
+[source,xml,title="phpdeps.xml"]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<PHPDeps xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/koriit/phpdeps/phpdeps.xsd">
+
+    <Modules>
+        <Module>
+            <Name>PHPDepsApplication</Name>
+            <Namespace>Koriit\PHPDeps\PHPDepsApplication</Namespace>
+            <Path>./src/PHPDeps/PHPDepsApplication.php</Path>
+        </Module>
+    </Modules>
+
+    <Detectors>
+        <ModuleDetector>
+            <Namespace>Koriit\PHPDeps</Namespace>
+            <Path>./src/PHPDeps</Path>
+        </ModuleDetector>
+    </Detectors>
+
+</PHPDeps>
+----
+
+== Commands and options
+
+Please, refer to built-in `help` command.
