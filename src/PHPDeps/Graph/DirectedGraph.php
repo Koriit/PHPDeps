@@ -127,7 +127,7 @@ class DirectedGraph
     }
 
     /**
-     * Scrolls a cycle so that minimal element(according to comparator) is at the beginning of cycle
+     * Scrolls a cycle so that minimal element(according to comparator) is at the beginning of cycle.
      *
      * @param array    $array
      * @param callable $comparator

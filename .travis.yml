@@ -18,7 +18,7 @@ before_script:
 script:
   - if [[ $(phpenv version-name) == '7.2' ]]; then vendor/bin/phpunit --coverage-clover clover.xml ; fi
   - if [[ $(phpenv version-name) != '7.2' ]]; then vendor/bin/phpunit ; fi
-  - ./phpdeps -v
+  - php phpdeps -v
 
 after_script:
   - if [[ $(phpenv version-name) == '7.2' ]]; then php vendor/bin/php-coveralls -v ; fi
