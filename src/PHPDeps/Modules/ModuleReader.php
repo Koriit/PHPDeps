@@ -13,7 +13,6 @@ use Koriit\PHPDeps\Tokenizer\DependenciesReader;
 use Koriit\PHPDeps\Tokenizer\Exceptions\MalformedFile;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use RuntimeException;
 
 class ModuleReader
 {
@@ -81,8 +80,9 @@ class ModuleReader
     /**
      * @param string $modulePath
      *
-     * @return string[] Paths to PHP files in the module
      * @throws ModuleNotFound
+     *
+     * @return string[] Paths to PHP files in the module
      */
     private function findPHPFiles($modulePath)
     {

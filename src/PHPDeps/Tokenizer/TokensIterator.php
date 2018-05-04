@@ -88,19 +88,19 @@ class TokensIterator extends ArrayIterator
             throw new WrongPosition('Not at block beginning position.');
         }
 
-        $counter = 1;
+        $bracesCounter = 1;
         $this->next();
-        while ($this->valid() && $counter > 0) {
+        while ($this->valid() && $bracesCounter > 0) {
             if ($this->current() === '{') {
-                $counter++;
+                $bracesCounter++;
             } elseif ($this->current() === '}') {
-                $counter--;
+                $bracesCounter--;
             }
 
             $this->next();
         }
 
-        if ($counter != 0) {
+        if ($bracesCounter != 0) {
             throw new UnexpectedEndOfTokens();
         }
     }

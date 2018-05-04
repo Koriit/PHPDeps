@@ -6,4 +6,5 @@
 /.coveralls.yml     export-ignore
 /.scrutinizer.yml   export-ignore
 /phpunit.xml.dist   export-ignore
+/phpdeps.xml        export-ignore
 /tests              export-ignore

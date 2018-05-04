@@ -7,8 +7,8 @@
 namespace Koriit\PHPDeps\Tokenizer;
 
 use Koriit\PHPDeps\Tokenizer\Exceptions\MalformedFile;
-use Koriit\PHPDeps\Tokenizer\Exceptions\UnexpectedToken;
 use Koriit\PHPDeps\Tokenizer\Exceptions\UnexpectedEndOfTokens;
+use Koriit\PHPDeps\Tokenizer\Exceptions\UnexpectedToken;
 use Koriit\PHPDeps\Tokenizer\Exceptions\WrongPosition;
 
 class DependenciesReader
@@ -66,8 +66,10 @@ class DependenciesReader
             $token = $it->current();
             if ($token == ';' || $it->currentIs(T_AS)) {
                 return $dependency;
+
             } elseif ($it->currentIsOneOf([T_STRING, T_NS_SEPARATOR])) {
                 $dependency .= $token[1];
+
             } elseif (!$it->currentIs(T_WHITESPACE)) {
                 throw new UnexpectedToken($token);
             }

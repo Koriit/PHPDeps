@@ -1,5 +1,5 @@
 = PHPDeps
-:toc: right
+:toc:
 
 image:https://travis-ci.org/Koriit/PHPDeps.svg?branch=master[Build Status, link="https://travis-ci.org/Koriit/PHPDeps"]
 
@@ -44,7 +44,7 @@ This is a general programming problem. If this subject is new to you, or you jus
 
 [NOTE,caption=TL;DR]
 ====
-If you are using https://www.php-fig.org/psr/psr-4[PSR-4] then you are fine.
+If you are using https://www.php-fig.org/psr/psr-4[PSR-4] and importing all classes and function via `use` then you are fine.
 ====
 
 PHPDeps detects module usage by reading `use` section of your PHP files.

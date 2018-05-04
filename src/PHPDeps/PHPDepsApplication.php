@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PHPDepsApplication implements ApplicationInterface
 {
-    const VERSION = "v0.1";
+    const VERSION = 'v0.1.0';
 
     /** @var bool */
     private $running;

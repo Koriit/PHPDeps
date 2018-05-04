@@ -9,8 +9,6 @@ interface ApplicationInterface
 {
     /**
      * Runs the application.
-     *
-     * @see ApplicationLifecycle
      */
     public function run();
 

@@ -103,6 +103,7 @@ class DirectedGraph
             $comparator = $this->getDefaultComparator();
         }
 
+        // Remove duplicates
         $cyclesCount = \count($cycles);
         for ($i = 0; $i < $cyclesCount; $i++) {
             $this->scrollCycle($cycles[$i], $comparator);
@@ -126,6 +127,8 @@ class DirectedGraph
     }
 
     /**
+     * Scrolls a cycle so that minimal element(according to comparator) is at the beginning of cycle
+     *
      * @param array    $array
      * @param callable $comparator
      */
