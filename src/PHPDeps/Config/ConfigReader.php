@@ -18,6 +18,8 @@ class ConfigReader
     /** @var ConfigValidator */
     private $validator;
 
+    const SCHEMA_LOCATION = __DIR__ . '/../../../phpdeps.xsd';
+
     public function __construct(ConfigValidator $validator)
     {
         $this->validator = $validator;
@@ -58,7 +60,7 @@ class ConfigReader
     private function validateSchema(DOMDocument $document)
     {
         $libxmlUseInternalErrors = \libxml_use_internal_errors(true);
-        if (!$document->schemaValidate(__DIR__ . '/../phpdeps.xsd')) {
+        if (!$document->schemaValidate(self::SCHEMA_LOCATION)) {
             throw new InvalidSchema();
         }
         \libxml_use_internal_errors($libxmlUseInternalErrors);
