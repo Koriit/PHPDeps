@@ -7,7 +7,7 @@
 namespace Koriit\PHPDeps\Tokenizer;
 
 use ArrayIterator;
-use Koriit\PHPDeps\Tokenizer\Exceptions\UnexpectedTokensEnd;
+use Koriit\PHPDeps\Tokenizer\Exceptions\UnexpectedEndOfTokens;
 use Koriit\PHPDeps\Tokenizer\Exceptions\WrongPosition;
 
 class TokensIterator extends ArrayIterator
@@ -55,7 +55,7 @@ class TokensIterator extends ArrayIterator
     }
 
     /**
-     * @throws UnexpectedTokensEnd
+     * @throws UnexpectedEndOfTokens
      */
     public function skipNextBlock()
     {
@@ -64,7 +64,7 @@ class TokensIterator extends ArrayIterator
     }
 
     /**
-     * @throws UnexpectedTokensEnd
+     * @throws UnexpectedEndOfTokens
      */
     public function findNextBlock()
     {
@@ -76,11 +76,11 @@ class TokensIterator extends ArrayIterator
             $this->next();
         }
 
-        throw new UnexpectedTokensEnd();
+        throw new UnexpectedEndOfTokens();
     }
 
     /**
-     * @throws UnexpectedTokensEnd
+     * @throws UnexpectedEndOfTokens
      */
     public function skipBlock()
     {
@@ -101,7 +101,7 @@ class TokensIterator extends ArrayIterator
         }
 
         if ($counter != 0) {
-            throw new UnexpectedTokensEnd();
+            throw new UnexpectedEndOfTokens();
         }
     }
 

@@ -4,7 +4,7 @@ namespace Koriit\PHPDeps\Tokenizer\Exceptions;
 
 use Exception;
 
-class UnexpectedTokensEnd extends Exception
+class UnexpectedEndOfTokens extends Exception
 {
     public function __construct($cause = null)
     {

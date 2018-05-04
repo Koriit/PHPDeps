@@ -8,7 +8,7 @@ namespace Koriit\PHPDeps\Tokenizer;
 
 use Koriit\PHPDeps\Tokenizer\Exceptions\MalformedFile;
 use Koriit\PHPDeps\Tokenizer\Exceptions\UnexpectedToken;
-use Koriit\PHPDeps\Tokenizer\Exceptions\UnexpectedTokensEnd;
+use Koriit\PHPDeps\Tokenizer\Exceptions\UnexpectedEndOfTokens;
 use Koriit\PHPDeps\Tokenizer\Exceptions\WrongPosition;
 
 class DependenciesReader
@@ -36,7 +36,7 @@ class DependenciesReader
 
                 $tokens->next();
             }
-        } catch (UnexpectedTokensEnd $e) {
+        } catch (UnexpectedEndOfTokens $e) {
             throw new MalformedFile($filePath, $e);
         } catch (UnexpectedToken $e) {
             throw new MalformedFile($filePath, $e);
@@ -48,7 +48,7 @@ class DependenciesReader
     /**
      * @param TokensIterator $it
      *
-     * @throws UnexpectedTokensEnd
+     * @throws UnexpectedEndOfTokens
      * @throws UnexpectedToken
      *
      * @return string Real dependency from use statement
@@ -75,6 +75,6 @@ class DependenciesReader
             $it->next();
         }
 
-        throw new UnexpectedTokensEnd();
+        throw new UnexpectedEndOfTokens();
     }
 }
