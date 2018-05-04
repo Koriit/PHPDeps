@@ -6,7 +6,7 @@
 
 namespace Koriit\PHPDeps;
 
-class ExitCodes
+abstract class ExitCodes
 {
     const OK = 0;
     const UNEXPECTED_ERROR = 1;

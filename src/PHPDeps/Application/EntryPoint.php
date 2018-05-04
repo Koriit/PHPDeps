@@ -4,6 +4,8 @@ namespace Koriit\PHPDeps\Application;
 
 use DI\Container;
 use DI\ContainerBuilder;
+use DI\DependencyException;
+use DI\NotFoundException;
 use Exception;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
@@ -49,8 +51,8 @@ class EntryPoint
      * @param Container $container
      * @param string    $appClass
      *
-     * @throws \DI\DependencyException
-     * @throws \DI\NotFoundException
+     * @throws DependencyException
+     * @throws NotFoundException
      *
      * @return ApplicationInterface
      */
