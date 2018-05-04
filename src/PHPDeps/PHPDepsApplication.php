@@ -16,22 +16,24 @@ use Koriit\PHPDeps\Commands\ModulesCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Application as ConsoleKernel;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class PHPDepsApplication implements ApplicationInterface
 {
+    const VERSION = "v0.1";
+
     /** @var bool */
     private $running;
 
     /** @var ContainerInterface */
     private $container;
 
-    /** @var Application */
+    /** @var ConsoleKernel */
     private $consoleKernel;
 
-    public function __construct(ContainerInterface $container, Application $consoleKernel)
+    public function __construct(ContainerInterface $container, ConsoleKernel $consoleKernel)
     {
         $this->running = false;
         $this->container = $container;
@@ -93,7 +95,8 @@ class PHPDepsApplication implements ApplicationInterface
 
     protected function initialize()
     {
-        $this->consoleKernel->setName('<info>' . $this->getName() . '</info>, a tool for finding circular dependencies in your modules.');
+        $this->consoleKernel->setName($this->getName());
+        $this->consoleKernel->setVersion(self::VERSION);
         $this->consoleKernel->setAutoExit(false);
     }
 
